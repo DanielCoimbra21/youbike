@@ -4,18 +4,14 @@ const itemCount = 20;
 bool isSelected = false;
 Color iconColor = Colors.grey;
 
-
-
 class RoutesPage extends StatefulWidget {
   const RoutesPage({super.key});
 
-    @override
+  @override
   State<StatefulWidget> createState() => _RoutesPageState();
 }
 
-
-class _RoutesPageState extends State<RoutesPage>{
-
+class _RoutesPageState extends State<RoutesPage> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -25,19 +21,17 @@ class _RoutesPageState extends State<RoutesPage>{
           title: Text('item of the list ${(index + 1)}'),
           leading: const Icon(Icons.person),
           trailing: IconButton(
-                    onPressed: () {
-                      // setState(() {
-                      //   // if(){
+            onPressed: () {
+              // setState(() {
+              //   // if(){
 
-                      //   // }
-                      // });
-                    },
-                    color: iconColor,
-                    iconSize: 10,
-                    icon: const Icon(
-                      Icons.favorite
-                    ),
-                  ),
+              //   // }
+              // });
+            },
+            color: iconColor,
+            iconSize: 10,
+            icon: const Icon(Icons.favorite),
+          ),
           onTap: () {
             debugPrint('Item ${(index + 1)} selected');
           },
@@ -45,8 +39,6 @@ class _RoutesPageState extends State<RoutesPage>{
       },
     );
   }
-  
-
 }
 
 
