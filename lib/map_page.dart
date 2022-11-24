@@ -1,8 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+
+import 'custom_drawer.dart';
 
 //LINK API MAP : 'https://wmts20.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg';
 //flUTTER MAP :
@@ -18,6 +19,8 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Map')),
+      drawer: CustomDrawer(),
       body: Center(
         child: Container(
           child: Column(children: [
