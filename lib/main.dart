@@ -6,12 +6,11 @@ import 'DTO/firebase_options.dart';
 
 import 'home_page.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
+  );
   runApp(const MyApp());
 }
 
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const RootPage(),
-      theme: ThemeData(primarySwatch: Color(0xFFF50364)),
+      theme: ThemeData(primarySwatch: Colors.pink),
     );
   }
 }
