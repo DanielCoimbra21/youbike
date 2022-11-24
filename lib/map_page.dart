@@ -42,6 +42,27 @@ class _MapPageState extends State<MapPage> {
                   urlTemplate:
                       'https://wmts20.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg',
                 ),
+                Container(
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      if (url ==
+                          'https://wmts20.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg') {
+                        setState(() {
+                          url =
+                              'https://wmts20.geo.admin.ch/1.0.0/ch.swisstopo.swissimage/default/current/3857/{z}/{x}/{y}.jpeg';
+                        });
+                      } else {
+                        setState(() {
+                          url =
+                              'https://wmts20.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg';
+                        });
+                      }
+                    },
+                    child: const Icon(Icons.map),
+                  ),
+                  alignment: Alignment.topRight,
+                  margin: EdgeInsets.all(20),
+                )
               ],
             ))
           ]),
