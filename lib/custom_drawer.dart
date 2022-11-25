@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youbike/hello_world.dart';
 import 'package:youbike/profile_page.dart';
 
 import 'home_page.dart';
@@ -26,12 +27,24 @@ class _CustomDrawerState extends State<CustomDrawer> {
               child: Text('YouBike'),
             ),
             ListTile(
+              leading: const Icon(Icons.wordpress),
+              title: const Text('HelloWorld'),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => HelloWorld()),
+                );
+
+                //Navigator.pop(context);
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.home),
               title: const Text('Home'),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                      builder: (BuildContext context) => const HomePage()),
+                      builder: (BuildContext context) => HomePage()),
                 );
 
                 //Navigator.pop(context);
