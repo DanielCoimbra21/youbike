@@ -104,10 +104,10 @@ class FlexiblePolyline {
     }
     final List<LatLngZ> results = <LatLngZ>[];
     final _Decoder dec = _Decoder(encoded);
-    LatLngZ result;
+    LatLngZ? result;
 
     do {
-      result = dec.decodeOne()!;
+      result = dec.decodeOne();
       if (result != null) results.add(result);
     } while (result != null);
     return results;
@@ -218,7 +218,8 @@ class _Decoder {
         lngConverter!.decodeValue(split!, index);
     index = lngResult.item2;
     if (hasThirdDimension()) {
-      final Tuple2<double, int> zResult = zConverter!.decodeValue(split!, index);
+      final Tuple2<double, int> zResult =
+          zConverter!.decodeValue(split!, index);
       index = zResult.item2;
       return LatLngZ(latResult.item1, lngResult.item1, zResult.item1);
     }
