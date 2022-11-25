@@ -41,8 +41,7 @@ class _MapPageState extends State<MapPage> {
               mapController: MapController(),
               children: [
                 TileLayer(
-                  urlTemplate:
-                      'https://wmts20.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg',
+                  urlTemplate: url,
                 ),
                 Container(
                   child: FloatingActionButton(
