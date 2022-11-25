@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:tuple/tuple.dart';
-
 import 'flexible_polyline.dart';
 
 ///
@@ -57,7 +56,7 @@ class Converter {
     }
     delta = delta >> 1;
     lastValue += delta;
-    coordinate = lastValue / multiplier;
+    coordinate = lastValue / multiplier!;
     return Tuple2(coordinate, result.item2);
   }
 
@@ -80,7 +79,7 @@ class Converter {
      * round(-1.5) --> -2
      * round(-2.5) --> -3
      */
-    final double scaledValue = (value * multiplier).abs().round() * value.sign;
+    final double scaledValue = (value * multiplier!).abs().round() * value.sign;
     int delta = (scaledValue - lastValue).toInt();
     final bool negative = delta < 0;
 
