@@ -38,25 +38,6 @@ class _MapPageState extends State<MapPage> {
                   source: 'OpenStreetMap contributors',
                   onSourceTapped: null,
                 ),
-              ],
-              mapController: MapController(),
-              children: [
-                TileLayer(
-                  urlTemplate: url,
-                ),
-                PolylineLayer(
-                  polylines: [
-                    Polyline(
-                      points: [
-                        LatLng(46.1721198306801, 7.22284290898798),
-                        LatLng(46.294661523787006, 7.534236631629828),
-                        LatLng(46.94579954609295, 7.45244183275721),
-                      ],
-                      strokeWidth: 5,
-                      color: Colors.blue,
-                    ),
-                  ],
-                ),
                 Container(
                   child: FloatingActionButton(
                     onPressed: () {
@@ -79,7 +60,26 @@ class _MapPageState extends State<MapPage> {
                   margin: EdgeInsets.all(20),
                 ),
               ],
-            ))
+              mapController: MapController(),
+              children: [
+                TileLayer(
+                  urlTemplate: url,
+                ),
+                PolylineLayer(
+                  polylines: [
+                    Polyline(
+                      points: [
+                        LatLng(46.1721198306801, 7.22284290898798),
+                        LatLng(46.294661523787006, 7.534236631629828),
+                        LatLng(46.94579954609295, 7.45244183275721),
+                      ],
+                      strokeWidth: 5,
+                      color: Colors.blue,
+                    ),
+                  ],
+                ),
+              ],
+            )),
           ]),
         ),
       ),
