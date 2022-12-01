@@ -4,18 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class GetText extends StatelessWidget {
+class DatabaseManager {
 
-  final String title;
+  final String uid;
+  DatabaseManager({required this.uid});
 
-  GetText(this.title);
+  final CollectionReference getText = FirebaseFirestore.instance.collection('HelloWorld');
 
+  //Future 
 
-  @override
-  Widget build(BuildContext context) {
+  // fetchText() async {
+  //   var text = await FirebaseFirestore.instance.collection('HelloWorld');
+  //   mapText(text);
+  // }
 
-    CollectionReference title = FirebaseFirestore.instance.collection('HelloWorld');
+  // mapText(CollectionReference<Map<String, dynamic>> text){
+  //   debugPrint("je ssuiss là ${text.doc()}"); 
+  // }
 
-    return Container();
-  }
 }

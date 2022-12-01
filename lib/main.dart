@@ -1,4 +1,6 @@
+
 import 'package:youbike/login_page.dart';
+import 'package:youbike/DTO/get_text.dart';
 import 'package:youbike/map_page.dart';
 import 'package:youbike/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,10 @@ import 'login_page.dart';
 import 'register_page.dart';
 import 'welcome_page.dart';
 
+
+DatabaseManager db = DatabaseManager(uid: "HelloWorld");
 void main() async {
+  
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -43,7 +48,7 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int currentPage = 0;
-  List<Widget> pages = const [HomePage(), RoutesPage(), MapPage()];
+  List<Widget> pages =  [HomePage(), RoutesPage(), MapPage()];
 
   @override
   Widget build(BuildContext context) {
