@@ -49,7 +49,7 @@ class _MapPageState extends State<MapPage> {
 
   Future<RouteShape> fetchRouteShape() async {
     final response = await http.get(Uri.parse(
-        "https://router.hereapi.com/v8/routes?transportMode=bicycle&origin=$latStart,$longStart&destination=$latEnd,$longEnd&return=polyline&apikey=bmXZap8HtsB1cNL_C_0uZA2JN1BR9Hx82BRN4lBRyYo"));
+        "https://router.hereapi.com/v8/routes?transportMode=bicycle&origin=$latStart,$longStart&destination=$latEnd,$longEnd&return=polyline,elevation,summary&apikey=bmXZap8HtsB1cNL_C_0uZA2JN1BR9Hx82BRN4lBRyYo"));
 
     if (response.statusCode == 200) {
       return RouteShape.fromJson(jsonDecode(response.body));
@@ -162,7 +162,6 @@ class _MapPageState extends State<MapPage> {
                           isCancelBtnVisible = false;
                           isBackBtnVisible = false;
                         });
-                        print("Reset");
                       },
                       child: const Icon(Icons.cancel),
                     ),
@@ -218,31 +217,31 @@ class _MapPageState extends State<MapPage> {
                     ),
                   ],
                 ),
-                // MarkerLayer(
-                //   markers: [
-                //     Marker(
-                //       width: 80.0,
-                //       height: 80.0,
-                //       point: start,
-                //       builder: (ctx) => const Icon(
-                //         Icons.flag,
-                //         color: Colors.red,
-                //         size: 40,
-                //       ),
-                //     ),
-                //     Marker(
-                //       width: 80.0,
-                //       height: 80.0,
-                //       point: end,
-                //       builder: (ctx) => const Icon(
-                //         Icons.location_on,
-                //         color: Colors.green,
-                //         size: 40,
-                //       ),
-                //     ),
-                //     for (var m in markers) m,
-                //   ],
-                // )
+                MarkerLayer(
+                  markers: [
+                    Marker(
+                      width: 80.0,
+                      height: 80.0,
+                      point: start,
+                      builder: (ctx) => const Icon(
+                        Icons.flag,
+                        color: Colors.red,
+                        size: 40,
+                      ),
+                    ),
+                    Marker(
+                      width: 80.0,
+                      height: 80.0,
+                      point: end,
+                      builder: (ctx) => const Icon(
+                        Icons.location_on,
+                        color: Colors.green,
+                        size: 40,
+                      ),
+                    ),
+                    for (var m in markers) m,
+                  ],
+                )
               ],
             )),
           ]),

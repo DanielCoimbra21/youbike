@@ -1,0 +1,52 @@
+{
+    "routes": [
+        {
+            "id": "80e0aadf-6987-4158-8985-cc36f4812936",
+            "sections": [
+                {
+                    "id": "efff0107-eea3-4bec-bf1e-de99407d0ffa",
+                    "type": "pedestrian",
+                    "departure": {
+                        "time": "2022-12-01T15:20:39+01:00",
+                        "place": {
+                            "type": "place",
+                            "location": {
+                                "lat": 47.58463,
+                                "lng": 11.05467,
+                                "elv": 1257.0
+                            },
+                            "originalLocation": {
+                                "lat": 47.5842469,
+                                "lng": 11.0555419
+                            }
+                        }
+                    },
+                    "arrival": {
+                        "time": "2022-12-01T16:08:01+01:00",
+                        "place": {
+                            "type": "place",
+                            "location": {
+                                "lat": 47.5891565,
+                                "lng": 11.060078,
+                                "elv": 912.0
+                            },
+                            "originalLocation": {
+                                "lat": 47.589299,
+                                "lng": 11.0601719
+                            }
+                        }
+                    },
+                    "summary": {
+                        "duration": 2842,
+                        "length": 2832,
+                        "baseDuration": 2842
+                    },
+                    "polyline": "B2Fs3q46C8k3iV0xYoQsJ3DgKwb3DgFkmBzFU4N7BgFwM7B7BoVvCzFwRvC7G4SjDUouBzFkD8QvCsEkN7BrJkIvC3I4SjDkNnBvCsO4DvC0P0UrEoQ8GjDkDsJnBzFwCnBzK3DvCzF3DnBvMwC7BzK0KjD3DgP7B8BwCT8GjInB0K7BvCsJ8G7BoL4SjDzKjDvC3IUnBnLoLjDkcwMzFkIgK7BnLgFvCvH8GnBgK8B7B4I4D7B7G0F7BwMgUjD8Q0UrEzP8BjD3N0FjDwRkS3DwH0F7BzF4DnBzUzF3DoQ8QrEjXgFrEgP8Q3DkS4N3DwHkI7BrTrE3DrOkDvCgKkNjD0KgF7B0KoGvCoL4SjDzPrEjDjNUvCrJsE7B8L4IvC0UgKrEsEsJ7B_OAvCnLgFvC7GkN7BgKsEvCvH0K7B0K0F7BoV8GrE0K4IvCwHoQvCoB4XjD8B0jB_EwMk9CvMgPwgB_EwWgPrE4NkIvCUrEAkIjXAsErJA7BnkBU8B_JAoG7LUsErOAzFjDU0FnVUgFzUUwC_JTgF3NT0FwCAAzFA0Kj_BoB0FzZU0F_JAgFrJA8GvMUA_EAoBvHUUrEAA7GU8BrEAwHjNU8BnLU7B7LA3DnGUwC3NUvCjXoBvC7pBoBjDnpB8BkOruB8B",
+                    "transport": {
+                        "mode": "pedestrian"
+                    }
+                }
+            ]
+        }
+    ]
+}
