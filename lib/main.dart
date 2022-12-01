@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: WelcomePage(),
+      home: HomePage(),
       //home: const RootPage(),
       theme: ThemeData(primarySwatch: Colors.pink),
     );
