@@ -218,31 +218,31 @@ class _MapPageState extends State<MapPage> {
                     ),
                   ],
                 ),
-                MarkerLayer(
-                  markers: [
-                    Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: start,
-                      builder: (ctx) => const Icon(
-                        Icons.flag,
-                        color: Colors.red,
-                        size: 40,
-                      ),
-                    ),
-                    Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: end,
-                      builder: (ctx) => const Icon(
-                        Icons.location_on,
-                        color: Colors.green,
-                        size: 40,
-                      ),
-                    ),
-                    for (var m in markers) m,
-                  ],
-                )
+                // MarkerLayer(
+                //   markers: [
+                //     Marker(
+                //       width: 80.0,
+                //       height: 80.0,
+                //       point: start,
+                //       builder: (ctx) => const Icon(
+                //         Icons.flag,
+                //         color: Colors.red,
+                //         size: 40,
+                //       ),
+                //     ),
+                //     Marker(
+                //       width: 80.0,
+                //       height: 80.0,
+                //       point: end,
+                //       builder: (ctx) => const Icon(
+                //         Icons.location_on,
+                //         color: Colors.green,
+                //         size: 40,
+                //       ),
+                //     ),
+                //     for (var m in markers) m,
+                //   ],
+                // )
               ],
             )),
           ]),
