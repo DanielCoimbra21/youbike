@@ -37,6 +37,7 @@ dependencies:
   flutter_map: ^3.0.0
   firebase_core: ^2.3.0
   cloud_firestore: ^4.1.0
+  tuple: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -90,3 +91,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
