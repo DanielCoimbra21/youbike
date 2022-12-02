@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "822402455843",
+    "project_id": "youbike-85a8f",
+    "storage_bucket": "youbike-85a8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822402455843:android:026478b7e1aa6a44485496",
+        "android_client_info": {
+          "package_name": "com.example.youbike"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822402455843-13m0hhc4bnocv6na39ig1pjr2raph3ev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy6xLxEJPQob2AMqf5k_a_1f_Ef8if__4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822402455843-13m0hhc4bnocv6na39ig1pjr2raph3ev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
