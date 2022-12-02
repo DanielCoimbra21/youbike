@@ -40,9 +40,6 @@ dependencies:
   cloud_firestore: ^4.1.0
   get: ^4.6.5
   html: ^0.15.1
-
-
-  firebase_auth: ^4.1.4
   tuple: ^2.0.0
 
 

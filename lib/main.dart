@@ -1,6 +1,5 @@
 import 'package:youbike/auth_controller.dart';
 import 'package:youbike/login_page.dart';
-import 'package:youbike/DTO/get_text.dart';
 import 'package:youbike/map_page.dart';
 import 'package:youbike/profile_page.dart';
 import 'package:flutter/material.dart';
