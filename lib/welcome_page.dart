@@ -12,15 +12,15 @@ class WelcomePage extends StatelessWidget {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(title: Text('Profile')),
-      drawer: CustomDrawer(),
+      appBar: AppBar(title: const Text('Profile')),
+      drawer: const CustomDrawer(),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(children: [
           Container(
             width: w,
             height: h * 0.3,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("img/loginBackground.png"),
                     fit: BoxFit.cover)),
@@ -30,7 +30,7 @@ class WelcomePage extends StatelessWidget {
                   SizedBox(
                     height: h * 0.18,
                   ),
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 44,
                     backgroundImage: AssetImage("img/backProfile.jpeg"),
                   )
@@ -38,7 +38,7 @@ class WelcomePage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           Container(
@@ -47,7 +47,7 @@ class WelcomePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "Welcome",
                   style: TextStyle(
                       fontSize: 36,
@@ -64,7 +64,7 @@ class WelcomePage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 100,
           ),
           GestureDetector(
@@ -76,10 +76,10 @@ class WelcomePage extends StatelessWidget {
               height: h * 0.08,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  image: DecorationImage(
+                  image: const DecorationImage(
                       image: AssetImage("img/btnBackground.png"),
                       fit: BoxFit.cover)),
-              child: Center(
+              child: const Center(
                 child: Text(
                   "Logout",
                   style: TextStyle(

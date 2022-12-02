@@ -11,6 +11,11 @@ class DatabaseManager {
       toFirestore: (road, _) => road.toJson(),
     );
 
+  final userRef = FirebaseFirestore.instance.collection('User').withConverter<User>(
+    fromFirestore: (snapshot, _) => User.fromJson(snapshot.data()!),
+    toFirestore: (user, _) => user.toJson(),
+    );
+
   // final userRef = FirebaseFirestore.instance.collection('User').withConverter<User>(
   //     fromFirestore: (snapshot, _) => Road.fromJson(snapshot.data()!),
   //     toFirestore: (road, _) => road.toJson(),
