@@ -1,4 +1,3 @@
-import 'package:youbike/DTO/get_text.dart';
 import 'package:youbike/map_page.dart';
 import 'package:youbike/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,8 @@ import 'DTO/firebase_options.dart';
 import 'home_page.dart';
 
 
-DatabaseManager db = DatabaseManager(uid: "HelloWorld");
+//DatabaseManager db = DatabaseManager(uid: "HelloWorld");
+
 void main() async {
   
   WidgetsFlutterBinding.ensureInitialized();
