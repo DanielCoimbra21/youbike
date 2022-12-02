@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
 
 class RouteShape{
+  /// RouteShape class represents an object we use to store in the DB firebase
   final String polyline;
   final double elvDeparture;
   final double elvArrival;
   final int duration;
   final int distance;
   final String transportMode;
-
 
   const RouteShape({
     required this.polyline,
@@ -18,6 +17,7 @@ class RouteShape{
     required this.transportMode,
   });
 
+  /// Method to transform the response JSON to an object called RouteShape
   factory RouteShape.fromJson(Map<String, dynamic> json){
     return RouteShape(
       polyline: json['routes'][0]['sections'][0]['polyline'] as String,
