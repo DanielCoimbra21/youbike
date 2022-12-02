@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:youbike/learn_flutter_page.dart';
 import 'package:flutter/material.dart';
 
-import 'DTO/get_text.dart';
+import 'Database/firestore_reference.dart';
 import 'custom_drawer.dart';
-
-DatabaseManager d = DatabaseManager(uid: "HelloWorld");
 
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
@@ -30,9 +28,9 @@ class HomePage extends StatelessWidget {
                 ),
               );
             },
-            child: const Text("Bonjour"),
+            
+            child: const Text('Text')),
           ),
-        ),
         );
   }
 }

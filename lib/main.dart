@@ -1,4 +1,3 @@
-
 import 'package:youbike/login_page.dart';
 import 'package:youbike/DTO/get_text.dart';
 import 'package:youbike/map_page.dart';
@@ -14,7 +13,8 @@ import 'register_page.dart';
 import 'welcome_page.dart';
 
 
-DatabaseManager db = DatabaseManager(uid: "HelloWorld");
+//DatabaseManager db = DatabaseManager(uid: "HelloWorld");
+
 void main() async {
   
   WidgetsFlutterBinding.ensureInitialized();
