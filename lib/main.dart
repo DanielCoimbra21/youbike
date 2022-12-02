@@ -14,7 +14,11 @@ import 'login_page.dart';
 import 'register_page.dart';
 import 'welcome_page.dart';
 
-DatabaseManager db = DatabaseManager(uid: "HelloWorld");
+
+
+//DatabaseManager db = DatabaseManager(uid: "HelloWorld");
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
