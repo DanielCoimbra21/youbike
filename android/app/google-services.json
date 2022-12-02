@@ -29,6 +29,13 @@
             {
               "client_id": "822402455843-13m0hhc4bnocv6na39ig1pjr2raph3ev.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "822402455843-4aho423v1i90n8n44e6sfip1dsqqbppk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.youbike"
+              }
             }
           ]
         }
