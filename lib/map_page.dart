@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:youbike/auth/secrets.dart';
 import 'package:youbike/polyline/flexible_polyline.dart';
 import 'package:youbike/route_shape.dart';
 
@@ -49,7 +50,7 @@ class _MapPageState extends State<MapPage> {
 
   Future<RouteShape> fetchRouteShape() async {
     final response = await http.get(Uri.parse(
-        "https://router.hereapi.com/v8/routes?transportMode=bicycle&origin=$latStart,$longStart&destination=$latEnd,$longEnd&return=polyline,elevation,summary&apikey=bmXZap8HtsB1cNL_C_0uZA2JN1BR9Hx82BRN4lBRyYo"));
+        "https://router.hereapi.com/v8/routes?transportMode=bicycle&origin=$latStart,$longStart&destination=$latEnd,$longEnd&return=polyline,elevation,summary&apikey=$apiHERE"));
 
     if (response.statusCode == 200) {
       return RouteShape.fromJson(jsonDecode(response.body));
@@ -114,14 +115,15 @@ class _MapPageState extends State<MapPage> {
                       longStart = markers[0].point.longitude;
                       latEnd = markers[1].point.latitude;
                       longEnd = markers[1].point.longitude;
-                       futureRouteShape = fetchRouteShape();
-                       futureRouteShape.then((value) {
-                        setState(() {
-                          poly = value.polyline;
-                        });
-                         //print(value.polyline);
-                       },);
-                     
+                      futureRouteShape = fetchRouteShape();
+                      futureRouteShape.then(
+                        (value) {
+                          setState(() {
+                            poly = value.polyline;
+                          });
+                          //print(value.polyline);
+                        },
+                      );
                     }
                   }
                 },
