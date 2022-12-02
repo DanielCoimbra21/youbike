@@ -37,7 +37,10 @@ dependencies:
   flutter_map: ^3.0.0
   firebase_core: ^2.3.0
   cloud_firestore: ^4.1.0
+
   firebase_auth: ^4.1.4
+  tuple: ^2.0.0
+
 
 dev_dependencies:
   flutter_test:
@@ -62,8 +65,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - img/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -91,3 +94,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

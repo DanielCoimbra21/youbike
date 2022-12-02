@@ -1,17 +1,8 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -25,6 +16,17 @@ class _LoginPageState extends State<LoginPage> {
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("img/logo-color.png"), fit: BoxFit.cover)),
+          child: Column(
+            children: [
+              SizedBox(
+                height: h * 0.18,
+              ),
+              CircleAvatar(
+                radius: 44,
+                backgroundImage: AssetImage("img/backProfile.jpeg"),
+              )
+            ],
+          ),
         ),
         Container(
           margin: const EdgeInsets.only(left: 20, right: 20),
@@ -33,12 +35,8 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Welcome back !",
-                style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "Sign into your account",
-                style: TextStyle(fontSize: 20, color: Colors.grey[500]),
+                "Create account",
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: 50,
@@ -121,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                   fit: BoxFit.cover)),
           child: Center(
             child: Text(
-              "Sign in",
+              "Sign up",
               style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
@@ -132,12 +130,12 @@ class _LoginPageState extends State<LoginPage> {
         SizedBox(height: w * 0.08),
         RichText(
             text: TextSpan(
-                text: "Don't have an account ?",
+                text: "Already have an account ?",
                 style: TextStyle(color: Colors.grey[500], fontSize: 20),
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
               TextSpan(
-                  text: " Create",
+                  text: " Login",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,

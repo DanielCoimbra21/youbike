@@ -1,10 +1,16 @@
+import 'package:youbike/login_page.dart';
+import 'package:youbike/DTO/get_text.dart';
 import 'package:youbike/map_page.dart';
 import 'package:youbike/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:youbike/welcome_page.dart';
 import 'DTO/firebase_options.dart';
 
 import 'home_page.dart';
+import 'login_page.dart';
+import 'register_page.dart';
+import 'welcome_page.dart';
 
 
 //DatabaseManager db = DatabaseManager(uid: "HelloWorld");
@@ -25,7 +31,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const RootPage(),
+      home: WelcomePage(),
+      //home: const RootPage(),
       theme: ThemeData(primarySwatch: Colors.pink),
     );
   }
