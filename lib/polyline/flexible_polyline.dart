@@ -3,7 +3,7 @@ import 'latlngz.dart';
 import 'converter.dart';
 
 class FlexiblePolyline {
-  static final int version = 1;
+  static const int version = 1;
   static final List<String> encodingTable =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_'
           .split('');
@@ -99,7 +99,7 @@ class FlexiblePolyline {
   /// @see LatLngZ
   ///
   static List<LatLngZ> decode(String encoded) {
-    if (encoded == null || encoded.trim().isEmpty) {
+    if (encoded.isEmpty || encoded.trim().isEmpty) {
       throw ArgumentError("Invalid argument!");
     }
     final List<LatLngZ> results = <LatLngZ>[];
@@ -129,7 +129,7 @@ class FlexiblePolyline {
   ///
   static String encode(List<LatLngZ> coordinates, int precision,
       ThirdDimension thirdDimension, int thirdDimPrecision) {
-    if (coordinates == null || coordinates.isEmpty) {
+    if (coordinates.isEmpty) {
       throw ArgumentError("Invalid coordinates!");
     }
     if (thirdDimension == null) {
@@ -143,11 +143,9 @@ class FlexiblePolyline {
     return enc.getEncoded();
   }
 
-  /**
-   * ThirdDimension type from the encoded input {@link String}
-   * @param encoded URL-safe encoded coordinate triples {@link String}
-   * @return type of {@link ThirdDimension}
-   */
+  /// ThirdDimension type from the encoded input {@link String}
+  /// @param encoded URL-safe encoded coordinate triples {@link String}
+  /// @return type of {@link ThirdDimension}
   static ThirdDimension getThirdDimension(List<String> encoded) {
     int index = 0;
     Tuple2<int, int> headerResult =
@@ -200,9 +198,10 @@ class _Decoder {
     final Tuple2<int, int> result =
         Converter.decodeUnsignedVarint(encoded, index);
 
-    if (result.item1 != FlexiblePolyline.version)
-      throw ArgumentError("Invalid format version");
-
+    if (result.item1 != FlexiblePolyline.version){
+        throw ArgumentError("Invalid format version");
+    }
+      
     // Decode the polyline header
     return Converter.decodeUnsignedVarint(encoded, result.item2);
   }
@@ -281,6 +280,7 @@ class _Encoder {
   }
 
   void add(LatLngZ tuple) {
+    
     if (tuple == null) {
       throw ArgumentError("Invalid LatLngZ tuple");
     }

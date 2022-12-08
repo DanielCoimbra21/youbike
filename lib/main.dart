@@ -1,23 +1,30 @@
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:youbike/DTO/user.dart';
+import 'package:youbike/auth_controller.dart';
 import 'package:youbike/login_page.dart';
-import 'package:youbike/DTO/get_text.dart';
 import 'package:youbike/map_page.dart';
-import 'package:youbike/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:youbike/welcome_page.dart';
 import 'DTO/firebase_options.dart';
+import 'package:get/get.dart';
+import 'auth_controller.dart';
 
 import 'home_page.dart';
 import 'login_page.dart';
 import 'register_page.dart';
 import 'welcome_page.dart';
 
-DatabaseManager db = DatabaseManager(uid: "HelloWorld");
+
+//DatabaseManager db = DatabaseManager(uid: "HelloWorld");
+var emailController = TextEditingController();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
+  ).then((value) => Get.put(AuthController()));
   runApp(const MyApp());
 }
 
@@ -26,9 +33,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: LoginPage(),
       //home: const RootPage(),
       theme: ThemeData(primarySwatch: Colors.pink),
     );
@@ -45,12 +52,13 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int currentPage = 0;
-  List<Widget> pages = [HomePage(), RoutesPage(), MapPage()];
+
+  //List<Widget> pages = [HomePage(), RoutesPage(), MapPage(), WelcomePage(email: emailController.text.trim())];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[currentPage],
+      //body: pages[currentPage],
       // bottomNavigationBar: NavigationBar(
       //   destinations: const [
       //     NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
