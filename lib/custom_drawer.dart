@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:youbike/hello_world.dart';
-import 'package:youbike/profile_page.dart';
+import 'package:youbike/welcome_page.dart';
 
 import 'home_page.dart';
 import 'map_page.dart';
+
+var emailController = TextEditingController();
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -51,12 +53,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.route),
-              title: const Text('My Routes'),
+              leading: const Icon(Icons.play_circle_filled_outlined),
+              title: const Text('Profile'),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                      builder: (BuildContext context) => const RoutesPage()),
+                      builder: (BuildContext context) => WelcomePage(email: emailController.text.trim())),
                 );
                 //Navigator.pop(context);
               },

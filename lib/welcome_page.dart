@@ -1,91 +1,98 @@
 import 'package:flutter/material.dart';
+import 'package:youbike/auth_controller.dart';
+
+import 'custom_drawer.dart';
 
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({super.key});
+  String? email;
+  WelcomePage({super.key, required this.email});
 
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
+      appBar: AppBar(title: const Text('Profile')),
+      drawer: const CustomDrawer(),
       backgroundColor: Colors.white,
-      body: Column(children: [
-        Container(
-          width: w,
-          height: h * 0.3,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("img/logo-color.png"), fit: BoxFit.cover)),
-          child: Column(
-            children: [
-              SizedBox(
-                height: h * 0.18,
+      body: SingleChildScrollView(
+        child: Column(children: [
+          Container(
+            width: w,
+            height: h * 0.3,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("img/loginBackground.png"),
+                    fit: BoxFit.cover)),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: h * 0.18,
+                  ),
+                  const CircleAvatar(
+                    radius: 44,
+                    backgroundImage: AssetImage("img/backProfile.jpeg"),
+                  )
+                ],
               ),
-              CircleAvatar(
-                radius: 44,
-                backgroundImage: AssetImage("img/backProfile.jpeg"),
-              )
-            ],
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(left: 20, right: 20),
-          width: w,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Welcome on YouBike",
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Container(
-          width: w * 0.5,
-          height: h * 0.08,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              image: DecorationImage(
-                  image: AssetImage("img/btnBackground.png"),
-                  fit: BoxFit.cover)),
-          child: Center(
-            child: Text(
-              "Sign up",
-              style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
             ),
           ),
-        ),
-        SizedBox(height: w * 0.08),
-        RichText(
-            text: TextSpan(
-                text: "Already have an account ?",
-                style: TextStyle(color: Colors.grey[500], fontSize: 20),
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-              TextSpan(
-                  text: " Login",
+          const SizedBox(
+            height: 50,
+          ),
+          Container(
+            width: w,
+            margin: const EdgeInsets.only(left: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Welcome",
                   style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold))
-            ]))
-      ]),
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54),
+                ),
+                Text(
+                  email!,
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[500]),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 100,
+          ),
+          GestureDetector(
+            onTap: () {
+              AuthController.instance.logout();
+            },
+            child: Container(
+              width: w * 0.5,
+              height: h * 0.08,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  image: const DecorationImage(
+                      image: AssetImage("img/btnBackground.png"),
+                      fit: BoxFit.cover)),
+              child: const Center(
+                child: Text(
+                  "Logout",
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: w * 0.08),
+        ]),
+      ),
     );
   }
 }
