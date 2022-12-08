@@ -17,6 +17,7 @@ class RouteShape{
     required this.transportMode,
   });
 
+
   /// Method to transform the response JSON to an object called RouteShape
   factory RouteShape.fromJson(Map<String, dynamic> json){
     return RouteShape(
