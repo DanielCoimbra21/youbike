@@ -1,4 +1,6 @@
 /// Coordinate triple
+// ignore_for_file: constant_identifier_names
+
 class LatLngZ {
   final double lat;
   final double lng;
