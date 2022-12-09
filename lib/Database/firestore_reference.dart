@@ -29,8 +29,25 @@ class DatabaseManager {
       roads.add(doc.data());
      }
      return roads;
-
   }
+
+  //Add User
+  //Future<void> addUser({required String email, required String? id}) async {
+   Future<void> addUser({required String email, required String? id}) async { 
+    final docUser = FirebaseFirestore.instance.collection('User').doc(id);
+    
+    final user = {
+    'email': email, 
+    'favoriteRoads': [], 
+    'firstName': '', 
+    'myRoads': [], 
+    'name': '', 
+    'position': 'position', 
+    'role': 'user'};
+
+    await docUser.set(user);
+  }
+
   // Stream<List<Road>> getRoads() => FirebaseFirestore.instance
   //   .collection('Road')
   //   .snapshots()
