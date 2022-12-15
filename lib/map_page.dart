@@ -32,25 +32,43 @@ class _MapPageState extends State<MapPage> {
   var end;
   // ignore: prefer_typing_uninitialized_variables
   List<Marker> markers = <Marker>[];
-  var maxMarker = 2;
+  var maxMarker = 10;
   var currentNumbMarker = 0;
   bool isCancelBtnVisible = false;
   bool isUndoBtnVisible = false;
+  bool isValidateBtnVisible = false;
   var latStart = 0.0;
   var longStart = 0.0;
   var latEnd = 0.0;
   var longEnd = 0.0;
   late Future<RouteShape> futureRouteShape;
   bool isLoaded = false;
-  late List<LatLng> latlen;
+  late List<LatLng> latlen = <LatLng>[];
 
   Future<RouteShape> fetchRouteShape() async {
-    final response = await http.get(Uri.parse(
-        "https://router.hereapi.com/v8/routes?transportMode=bicycle&origin=$latStart,$longStart&destination=$latEnd,$longEnd&return=polyline,elevation,summary&apikey=$apiHERE"));
+    final response;
+    var uri = "";
+
+    if (currentNumbMarker == 2) {
+      uri =
+          "https://router.hereapi.com/v8/routes?transportMode=bicycle&origin=${markers.first.point.latitude},${markers.first.point.longitude}&destination=${markers.last.point.latitude},${markers.last.point.longitude}&return=polyline,elevation,summary&apikey=$apiHERE";
+    } else {
+      var via = "";
+      for (int i = 1; i <= markers.length - 2; i++) {
+        via +=
+            "&via=${markers[i].point.latitude},${markers[i].point.longitude}!passThrough=true";
+      }
+      uri =
+          "https://router.hereapi.com/v8/routes?transportMode=bicycle&return=polyline,summary,elevation,passthrough&origin=${markers.first.point.latitude},${markers.first.point.longitude}&destination=${markers.last.point.latitude},${markers.last.point.longitude}&$via&apikey=$apiHERE";
+    }
+    log(uri);
+
+    response = await http.get(Uri.parse(uri));
 
     if (response.statusCode == 200) {
       return RouteShape.fromJson(jsonDecode(response.body));
     } else {
+      log(response.statusCode.toString());
       throw Exception('Failed to load routeShape');
     }
   }
@@ -105,21 +123,8 @@ class _MapPageState extends State<MapPage> {
                     isUndoBtnVisible = true;
                   });
 
-                  if (currentNumbMarker == 2) {
-                    latStart = markers[0].point.latitude;
-                    longStart = markers[0].point.longitude;
-                    latEnd = markers[1].point.latitude;
-                    longEnd = markers[1].point.longitude;
-                    futureRouteShape = fetchRouteShape();
-                    futureRouteShape.then(
-                      (value) {
-                        setState(() {
-                          poly = value.polyline;
-                          isLoaded = true;
-                          route();
-                        });
-                      },
-                    );
+                  if (currentNumbMarker >= 2) {
+                    isValidateBtnVisible = true;
                   }
                 }
               },
@@ -155,11 +160,14 @@ class _MapPageState extends State<MapPage> {
                   child: FloatingActionButton(
                     onPressed: () {
                       markers.clear();
-                      latlen.clear();
+                      if (latlen.isNotEmpty) {
+                        latlen.clear();
+                      }
                       setState(() {
                         currentNumbMarker = 0;
                         isCancelBtnVisible = false;
                         isUndoBtnVisible = false;
+                        isValidateBtnVisible = false;
                       });
                     },
                     child: const Icon(Icons.cancel),
@@ -175,7 +183,9 @@ class _MapPageState extends State<MapPage> {
                     onPressed: () {
                       if (currentNumbMarker > 0) {
                         markers.removeLast();
-                        latlen.clear();
+                        if (latlen.isNotEmpty) {
+                          latlen.clear();
+                        }
                         setState(() {
                           currentNumbMarker -= 1;
                           if (currentNumbMarker == 0) {
@@ -184,8 +194,33 @@ class _MapPageState extends State<MapPage> {
                           }
                         });
                       }
+                      if (currentNumbMarker == 1) {
+                        isValidateBtnVisible = false;
+                      }
                     },
                     child: const Icon(Icons.undo),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: isValidateBtnVisible,
+                child: Container(
+                  alignment: Alignment.bottomRight,
+                  margin: const EdgeInsets.only(bottom: 20, right: 20),
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      futureRouteShape = fetchRouteShape();
+                      futureRouteShape.then(
+                        (value) {
+                          setState(() {
+                            poly = value.polyline;
+                            isLoaded = true;
+                            route();
+                          });
+                        },
+                      );
+                    },
+                    child: const Icon(Icons.check),
                   ),
                 ),
               )
