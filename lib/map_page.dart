@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 // ignore: depend_on_referenced_packages
 import 'package:latlong2/latlong.dart';
 import 'package:youbike/auth/secrets.dart';
@@ -49,7 +50,41 @@ class _MapPageState extends State<MapPage> {
   late List<LatLng> latlen = <LatLng>[];
   bool isSaveVisible = false;
   late RouteShape rs;
+  TextEditingController _textFieldController = TextEditingController();
+  var routeName;
 
+  Future<void> _displayTextInputDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('TextField in Dialog'),
+          content: TextField(
+            controller: _textFieldController,
+            decoration: InputDecoration(hintText: "Text Field in Dialog"),
+          ),
+          actions: <Widget>[
+            FloatingActionButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FloatingActionButton(
+              child: Text('OK'),
+              onPressed: () {
+                setState(() {
+                  routeName = _textFieldController.text;
+                });
+                                      addRoute(rs,routeName, AuthController.instance.auth.currentUser?.uid);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Future<RouteShape> fetchRouteShape() async {
     final response;
@@ -189,7 +224,7 @@ class _MapPageState extends State<MapPage> {
                   margin: const EdgeInsets.only(top: 240, right: 20),
                   child: FloatingActionButton(
                     onPressed: () {
-                      addRoute(rs,"test2", AuthController.instance.auth.currentUser?.uid);
+                      _displayTextInputDialog(context);
                     },
                     child: const Icon(Icons.save_alt),
                   ),
@@ -293,3 +328,5 @@ addRoute(RouteShape rs ,String name, String? id) {
   DatabaseManager db = DatabaseManager();
   db.addRoad(rs: rs, name: name, id: id);
 }
+
+

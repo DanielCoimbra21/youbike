@@ -24,8 +24,8 @@ class RouteShape{
   factory RouteShape.fromJson(Map<String, dynamic> json){
     return RouteShape(
       polyline: json['routes'][0]['sections'][0]['polyline'] as String,
-      elvDeparture: json['routes'][0]['sections'][0]['departure']['place']['location']['elv'] as int,
-      elvArrival: json['routes'][0]['sections'][0]['arrival']['place']['location']['elv'] as int,
+      elvDeparture: json['routes'][0]['sections'][0]['departure']['place']['location']['elv'].toInt(),
+      elvArrival: json['routes'][0]['sections'][0]['arrival']['place']['location']['elv'].toInt(),
       duration: json['routes'][0]['sections'][0]['summary']['duration'] as int,
       distance: json['routes'][0]['sections'][0]['summary']['length'] as int ,
       transportMode: json['routes'][0]['sections'][0]['transport']['mode'] as String,
