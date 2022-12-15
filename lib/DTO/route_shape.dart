@@ -1,9 +1,11 @@
 
+import 'dart:ffi';
+
 class RouteShape{
   /// RouteShape class represents an object we use to store in the DB firebase
   final String polyline;
-  final double elvDeparture;
-  final double elvArrival;
+  final int elvDeparture;
+  final int elvArrival;
   final int duration;
   final int distance;
   final String transportMode;
@@ -22,8 +24,8 @@ class RouteShape{
   factory RouteShape.fromJson(Map<String, dynamic> json){
     return RouteShape(
       polyline: json['routes'][0]['sections'][0]['polyline'] as String,
-      elvDeparture: json['routes'][0]['sections'][0]['departure']['place']['location']['elv'] as double,
-      elvArrival: json['routes'][0]['sections'][0]['arrival']['place']['location']['elv'] as double,
+      elvDeparture: json['routes'][0]['sections'][0]['departure']['place']['location']['elv'] as int,
+      elvArrival: json['routes'][0]['sections'][0]['arrival']['place']['location']['elv'] as int,
       duration: json['routes'][0]['sections'][0]['summary']['duration'] as int,
       distance: json['routes'][0]['sections'][0]['summary']['length'] as int ,
       transportMode: json['routes'][0]['sections'][0]['transport']['mode'] as String,
