@@ -15,7 +15,7 @@ class User {
   final List<Road> favoriteRoads;
   final String firstName;
   final String name;
-  final int role;
+  final String role;
   final List<Road> myRoads;
   final String position;
 
@@ -27,7 +27,7 @@ class User {
       myRoads: json['myRoads'] as List<Road>,
       name: json['name'] as String,
       position: json['position'] as String,
-      role: json['role'] as int);
+      role: json['role'] as String);
 
   Map<String, dynamic> toJson() => _userToJson(this);
 
@@ -41,7 +41,7 @@ User _userFromJson(Map<String, dynamic> json) {
       myRoads: json['myRoads'] as List<Road>,
       name: json['name'] as String,
       position: json['position'] as String,
-      role: json['role'] as int);
+      role: json['role'] as String);
 }
 
 

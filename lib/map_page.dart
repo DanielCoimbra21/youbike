@@ -6,8 +6,10 @@ import 'package:flutter_map/flutter_map.dart';
 // ignore: depend_on_referenced_packages
 import 'package:latlong2/latlong.dart';
 import 'package:youbike/auth/secrets.dart';
+import 'package:youbike/auth_controller.dart';
 import 'package:youbike/polyline/flexible_polyline.dart';
-import 'package:youbike/route_shape.dart';
+import 'package:youbike/DTO/route_shape.dart';
+import 'Database/firestore_reference.dart';
 import 'custom_drawer.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
@@ -43,7 +45,11 @@ class _MapPageState extends State<MapPage> {
   var longEnd = 0.0;
   late Future<RouteShape> futureRouteShape;
   bool isLoaded = false;
+
   late List<LatLng> latlen = <LatLng>[];
+  bool isSaveVisible = false;
+  late RouteShape rs;
+
 
   Future<RouteShape> fetchRouteShape() async {
     final response;
@@ -66,7 +72,8 @@ class _MapPageState extends State<MapPage> {
     response = await http.get(Uri.parse(uri));
 
     if (response.statusCode == 200) {
-      return RouteShape.fromJson(jsonDecode(response.body));
+      rs = RouteShape.fromJson(jsonDecode(response.body));
+      return rs;
     } else {
       log(response.statusCode.toString());
       throw Exception('Failed to load routeShape');
@@ -121,6 +128,7 @@ class _MapPageState extends State<MapPage> {
                     currentNumbMarker += 1;
                     isCancelBtnVisible = true;
                     isUndoBtnVisible = true;
+                    isSaveVisible = true;
                   });
 
                   if (currentNumbMarker >= 2) {
@@ -174,6 +182,20 @@ class _MapPageState extends State<MapPage> {
                   ),
                 ),
               ),
+              Visibility(
+                visible: isSaveVisible,
+                child: Container(
+                  alignment: Alignment.topRight,
+                  margin: const EdgeInsets.only(top: 240, right: 20),
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      addRoute(rs,"test2", AuthController.instance.auth.currentUser?.uid);
+                    },
+                    child: const Icon(Icons.save_alt),
+                  ),
+                ),
+              ),
+
               Visibility(
                 visible: isUndoBtnVisible,
                 child: Container(
@@ -265,4 +287,9 @@ class _MapPageState extends State<MapPage> {
       ),
     );
   }
+}
+
+addRoute(RouteShape rs ,String name, String? id) {
+  DatabaseManager db = DatabaseManager();
+  db.addRoad(rs: rs, name: name, id: id);
 }

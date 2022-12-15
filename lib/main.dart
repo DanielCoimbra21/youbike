@@ -1,3 +1,4 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:youbike/DTO/user.dart';
 import 'package:youbike/auth_controller.dart';
@@ -16,10 +17,8 @@ import 'register_page.dart';
 import 'welcome_page.dart';
 
 
-
 //DatabaseManager db = DatabaseManager(uid: "HelloWorld");
 var emailController = TextEditingController();
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,6 +52,7 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int currentPage = 0;
+
   //List<Widget> pages = [HomePage(), RoutesPage(), MapPage(), WelcomePage(email: emailController.text.trim())];
 
   @override
