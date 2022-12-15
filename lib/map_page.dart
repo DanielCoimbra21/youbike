@@ -50,36 +50,51 @@ class _MapPageState extends State<MapPage> {
   late List<LatLng> latlen = <LatLng>[];
   bool isSaveVisible = false;
   late RouteShape rs;
-  TextEditingController _textFieldController = TextEditingController();
+  final TextEditingController _textFieldController = TextEditingController();
   var routeName;
+
+  final ButtonStyle flatButtonStyle = TextButton.styleFrom(
+    foregroundColor: Colors.black87, minimumSize: const Size(88, 36),
+    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(2.0)),
+    ),
+  );
 
   Future<void> _displayTextInputDialog(BuildContext context) async {
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('TextField in Dialog'),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+          ),
+          title: const Text('Enter your tour name'),
           content: TextField(
             controller: _textFieldController,
-            decoration: InputDecoration(hintText: "Text Field in Dialog"),
+            decoration: const InputDecoration(hintText: "New tour"),
           ),
-          actions: <Widget>[
-            FloatingActionButton(
-              child: Text('CANCEL'),
+          actions: [
+            TextButton(
+              style: flatButtonStyle,
               onPressed: () {
                 Navigator.pop(context);
               },
+              child: Text('CANCEL'),
             ),
-            FloatingActionButton(
-              child: Text('OK'),
+            TextButton(
+              style: flatButtonStyle,
               onPressed: () {
                 setState(() {
                   routeName = _textFieldController.text;
                 });
-                                      addRoute(rs,routeName, AuthController.instance.auth.currentUser?.uid);
+                addRoute(rs, routeName,
+                    AuthController.instance.auth.currentUser?.uid);
                 Navigator.pop(context);
               },
-            ),
+              child: Text('OK'),
+            )
           ],
         );
       },
@@ -87,7 +102,7 @@ class _MapPageState extends State<MapPage> {
   }
 
   Future<RouteShape> fetchRouteShape() async {
-    final response;
+    final http.Response response;
     var uri = "";
 
     if (currentNumbMarker == 2) {
@@ -230,7 +245,6 @@ class _MapPageState extends State<MapPage> {
                   ),
                 ),
               ),
-
               Visibility(
                 visible: isUndoBtnVisible,
                 child: Container(
@@ -324,9 +338,7 @@ class _MapPageState extends State<MapPage> {
   }
 }
 
-addRoute(RouteShape rs ,String name, String? id) {
+addRoute(RouteShape rs, String name, String? id) {
   DatabaseManager db = DatabaseManager();
   db.addRoad(rs: rs, name: name, id: id);
 }
-
-

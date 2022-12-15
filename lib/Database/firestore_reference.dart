@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:youbike/DTO/route_shape.dart';
+import 'package:youbike/auth_controller.dart';
 
 import '../DTO/road.dart';
 import '../DTO/user.dart';
@@ -64,19 +65,21 @@ class DatabaseManager {
     'Distance': rs.distance};
 
     await docRoad.set(road);
-    //updateMyRoadsByUser(id: id);
+    updateMyRoadsByUser(id: id, roadId: docRoad.id);
   }
 
-  Future<void> updateMyRoadsByUser({required String? id}) async{
+  Future<void> updateMyRoadsByUser({required String? id, required String? roadId}) async{
     final docUser = FirebaseFirestore.instance.collection('User').doc(id);
     
-    docUser.get().then(
-    (DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>;
-    print(data);
-  },
-  onError: (e) => print("Error getting document: $e"),
+    var collection = FirebaseFirestore.instance.collection('User');
+        collection 
+  .doc(id)
+  .update(
+  {
+    'myRoads': FieldValue.arrayUnion([roadId]),
+  }
 );
+    
 
     //docUser.update({'favoriteRoads':  })
   }
