@@ -64,19 +64,23 @@ class DatabaseManager {
     'Distance': rs.distance};
 
     await docRoad.set(road);
-    //updateMyRoadsByUser(id: id);
+    updateMyRoadsByUser(id: id, roadId: docRoad.id);
   }
 
-  Future<void> updateMyRoadsByUser({required String? id}) async{
+  Future<void> updateMyRoadsByUser({required String? id, required String? roadId}) async{
     final docUser = FirebaseFirestore.instance.collection('User').doc(id);
     
-    docUser.get().then(
-    (DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>;
-    print(data);
-  },
-  onError: (e) => print("Error getting document: $e"),
-);
+    DocumentSnapshot snapshot = await docUser.get();
+    var doc = snapshot.data();
+    
+    
+
+    // if(doc!['myRoads'].contains(roadId)){
+    //     docUser.update({
+    //   'myRoads' : FieldValue.arrayUnion([roadId])
+    // });
+    // }
+    
 
     //docUser.update({'favoriteRoads':  })
   }
