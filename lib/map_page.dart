@@ -38,9 +38,9 @@ class _MapPageState extends State<MapPage> {
   List<Marker> markers = <Marker>[];
   var maxMarker = 10;
   var currentNumbMarker = 0;
-  bool isCancelBtnVisible = false;
-  bool isUndoBtnVisible = false;
+  bool isCancelAndDeleteVisible = false;
   bool isValidateBtnVisible = false;
+  bool isSaveVisible = false;
   var latStart = 0.0;
   var longStart = 0.0;
   var latEnd = 0.0;
@@ -50,7 +50,6 @@ class _MapPageState extends State<MapPage> {
   DatabaseManager db = DatabaseManager();
 
   late List<LatLng> latlen = <LatLng>[];
-  bool isSaveVisible = false;
   late RouteShape rs;
   final TextEditingController _textFieldController = TextEditingController();
   var routeName;
@@ -169,7 +168,7 @@ class _MapPageState extends State<MapPage> {
                 if (currentNumbMarker < maxMarker) {
                   markers.add(
                     Marker(
-                     anchorPos: AnchorPos.exactly(Anchor(10, -10)),
+                      anchorPos: AnchorPos.exactly(Anchor(10, -10)),
                       point: latLng,
                       builder: (ctx) => const Icon(
                         Icons.location_on,
@@ -180,22 +179,17 @@ class _MapPageState extends State<MapPage> {
                   );
                   setState(() {
                     currentNumbMarker += 1;
-                    isCancelBtnVisible = true;
-                    isUndoBtnVisible = true;
-                    isSaveVisible = true;
+                    isCancelAndDeleteVisible = true;
                   });
 
                   if (currentNumbMarker >= 2) {
                     isValidateBtnVisible = true;
                   }
                 }
+                isSaveVisible = false;
               },
             ),
             nonRotatedChildren: [
-              AttributionWidget.defaultWidget(
-                source: 'OpenStreetMap contributors',
-                onSourceTapped: null,
-              ),
               Container(
                 alignment: Alignment.topRight,
                 margin: const EdgeInsets.all(20),
@@ -215,17 +209,19 @@ class _MapPageState extends State<MapPage> {
                 ),
               ),
               Visibility(
-                visible: isCancelBtnVisible,
+                visible: isCancelAndDeleteVisible,
                 child: FabCircularMenu(
-                  fabMargin: const EdgeInsets.only(bottom: 75, right: 40),
+                  fabMargin: const EdgeInsets.only(
+                      bottom: 60, right: 40, left: 40, top: 40),
                   animationDuration: const Duration(milliseconds: 500),
-                  ringDiameter: MediaQuery.of(context).size.width * 0.9,
+                  ringDiameter: MediaQuery.of(context).size.width,
                   ringWidth: MediaQuery.of(context).size.width * 0.2,
                   fabElevation: 9.0,
                   ringColor: Colors.transparent,
                   children: <Widget>[
+                    Visibility(child: Icon(Icons.add, size: 1), visible: false),
                     Visibility(
-                      visible: isCancelBtnVisible,
+                      visible: isCancelAndDeleteVisible,
                       child: FloatingActionButton(
                         onPressed: () {
                           markers.clear();
@@ -234,16 +230,16 @@ class _MapPageState extends State<MapPage> {
                           }
                           setState(() {
                             currentNumbMarker = 0;
-                            isCancelBtnVisible = false;
-                            isUndoBtnVisible = false;
+                            isCancelAndDeleteVisible = false;
                             isValidateBtnVisible = false;
+                            isSaveVisible = false;
                           });
                         },
                         child: const Icon(Icons.cancel),
                       ),
                     ),
                     Visibility(
-                      visible: isUndoBtnVisible,
+                      visible: isCancelAndDeleteVisible,
                       child: FloatingActionButton(
                         onPressed: () {
                           if (currentNumbMarker > 0) {
@@ -253,9 +249,9 @@ class _MapPageState extends State<MapPage> {
                             }
                             setState(() {
                               currentNumbMarker -= 1;
+                              isSaveVisible = false;
                               if (currentNumbMarker == 0) {
-                                isUndoBtnVisible = false;
-                                isCancelBtnVisible = false;
+                                isCancelAndDeleteVisible = false;
                               }
                             });
                           }
@@ -277,6 +273,7 @@ class _MapPageState extends State<MapPage> {
                                 poly = value.polyline;
                                 isLoaded = true;
                                 route();
+                                isSaveVisible = true;
                               });
                             },
                           );
@@ -285,17 +282,21 @@ class _MapPageState extends State<MapPage> {
                       ),
                     ),
                     Visibility(
-                      visible: isValidateBtnVisible,
+                      visible: isSaveVisible,
                       child: FloatingActionButton(
                         onPressed: () {
-                        _displayTextInputDialog(context);
+                          _displayTextInputDialog(context);
                         },
                         child: const Icon(Icons.save_alt),
                       ),
                     ),
                   ],
                 ),
-              )
+              ),
+              AttributionWidget.defaultWidget(
+                source: 'OpenStreetMap contributors',
+                onSourceTapped: null,
+              ),
             ],
             mapController: MapController(),
             children: [
