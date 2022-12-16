@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
 import 'package:youbike/DTO/route_shape.dart';
 import 'package:youbike/auth_controller.dart';
+import 'package:youbike/routes_list.dart';
 
 import '../DTO/road.dart';
 import '../DTO/user.dart';
@@ -33,6 +34,7 @@ class DatabaseManager {
       roads.add(doc.data());
     }
     return roads;
+
   }
 
 
@@ -55,6 +57,7 @@ class DatabaseManager {
     }
     
     return roads;
+
   }
 
   //Add User
@@ -105,8 +108,20 @@ class DatabaseManager {
       'myRoads': FieldValue.arrayUnion([roadId]),
     });
 
-    //docUser.update({'favoriteRoads':  })
   }
+
+
+  Future<void> deleteMyRoad(String? roadId) async {
+    FirebaseFirestore.instance.collection("Road").doc(roadId).delete().then(
+          (doc) => print("Document deleted"),
+          onError: (e) => print("Error updating document $e"),
+        );
+
+    removeFromMyRoadsRoads(
+        id: AuthController.instance.auth.currentUser?.uid,
+        roadId: roadId);
+  }
+
 
   Future<void> addToFavoriteRoads(
       {required String? id, required String? roadId}) async {
@@ -151,5 +166,14 @@ Future<void> removeFromFavoriteRoads(
         'myRoads': FieldValue.arrayRemove([roadId]),
       });
     }
+
+  Future<void> removeFromMyRoadsRoads(
+      {required String? id, required String? roadId}) async {
+    final docUser = FirebaseFirestore.instance.collection('User').doc(id);
+
+    var collection = FirebaseFirestore.instance.collection('User');
+    collection.doc(id).update({
+      'myRoads': FieldValue.arrayRemove([roadId]),
+    });
   }
 }

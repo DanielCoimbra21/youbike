@@ -46,6 +46,7 @@ class _MapPageState extends State<MapPage> {
   var longEnd = 0.0;
   late Future<RouteShape> futureRouteShape;
   bool isLoaded = false;
+  DatabaseManager db = DatabaseManager();
 
   late List<LatLng> latlen = <LatLng>[];
   bool isSaveVisible = false;
@@ -53,8 +54,10 @@ class _MapPageState extends State<MapPage> {
   final TextEditingController _textFieldController = TextEditingController();
   var routeName;
 
+
   final ButtonStyle flatButtonStyle = TextButton.styleFrom(
-    foregroundColor: Colors.black87, minimumSize: const Size(88, 36),
+    foregroundColor: Colors.black87,
+    minimumSize: const Size(88, 36),
     padding: const EdgeInsets.symmetric(horizontal: 16.0),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(2.0)),
@@ -166,9 +169,10 @@ class _MapPageState extends State<MapPage> {
                 if (currentNumbMarker < maxMarker) {
                   markers.add(
                     Marker(
+                     anchorPos: AnchorPos.exactly(Anchor(10, -10)),
                       point: latLng,
                       builder: (ctx) => const Icon(
-                        Icons.flag,
+                        Icons.location_on,
                         color: Colors.red,
                         size: 40,
                       ),
@@ -233,19 +237,6 @@ class _MapPageState extends State<MapPage> {
                 ),
               ),
               Visibility(
-                visible: isSaveVisible,
-                child: Container(
-                  alignment: Alignment.topRight,
-                  margin: const EdgeInsets.only(top: 240, right: 20),
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      _displayTextInputDialog(context);
-                    },
-                    child: const Icon(Icons.save_alt),
-                  ),
-                ),
-              ),
-              Visibility(
                 visible: isUndoBtnVisible,
                 child: Container(
                   alignment: Alignment.topRight,
@@ -270,6 +261,19 @@ class _MapPageState extends State<MapPage> {
                       }
                     },
                     child: const Icon(Icons.undo),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: isSaveVisible,
+                child: Container(
+                  alignment: Alignment.topRight,
+                  margin: const EdgeInsets.only(top: 260, right: 20),
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      _displayTextInputDialog(context);
+                    },
+                    child: const Icon(Icons.save_alt),
                   ),
                 ),
               ),
