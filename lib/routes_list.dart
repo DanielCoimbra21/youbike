@@ -126,19 +126,25 @@ class _RoutesListState extends State<RoutesList> {
   }
 }
 
-// class Roads extends StatefulWidget{
-// final Road road;
-
-//   @override
-//   State<StatefulWidget> createState() {
-//     // TODO: implement createState
-//     throw UnimplementedError();
-//   }
-
-// }
-
-// Widget buildRoad(Road road) => ListTile(
-//   leading: CircleAvatar(child: Text('${road.endPoint}')),
-//   title: Text(road.startingPoint),
-//   subtitle: Text(road.duration.toString()),
-// );
+//  child: Padding(
+//           padding: const EdgeInsets.all(12),
+//           child: Column(
+//             children: [
+//               Row(
+//                 children: [
+//                   Padding(
+//                     padding: const EdgeInsets.only(bottom: 1),
+//                     child: Text(road.name),
+//                   ),
+//                 ],
+//               ),
+//               Row(
+//                 children: [
+//                   Text(road.name),
+//                   const Spacer(),
+//                   Text(road.distance.toString())
+//                 ],
+//               )
+//             ],
+//           ),
+//         ),

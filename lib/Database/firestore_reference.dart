@@ -34,11 +34,9 @@ class DatabaseManager {
       roads.add(doc.data());
     }
     return roads;
-
   }
 
-
-   //List Roads
+  //List Roads
   Future<List<Road?>> getFavRoads({required String? id}) async {
     final docUser = FirebaseFirestore.instance.collection('User').doc(id);
     final allRoads = await roadRef.get();
@@ -47,17 +45,16 @@ class DatabaseManager {
 
     List favRoadsName = docU.get('favoriteRoads');
     List<Road> roads = [];
-    for(var idRoute in favRoadsName){
-      for(var road in allRoads.docs){
-        if(road.id == idRoute){
-            roads.add(road.data());
+    for (var idRoute in favRoadsName) {
+      for (var road in allRoads.docs) {
+        if (road.id == idRoute) {
+          roads.add(road.data());
         }
-    }
+      }
       //addRoad in anotherlist of roads
     }
-    
-    return roads;
 
+    return roads;
   }
 
   //Add User
@@ -107,9 +104,7 @@ class DatabaseManager {
     collection.doc(id).update({
       'myRoads': FieldValue.arrayUnion([roadId]),
     });
-
   }
-
 
   Future<void> deleteMyRoad(String? roadId) async {
     FirebaseFirestore.instance.collection("Road").doc(roadId).delete().then(
@@ -118,10 +113,8 @@ class DatabaseManager {
         );
 
     removeFromMyRoadsRoads(
-        id: AuthController.instance.auth.currentUser?.uid,
-        roadId: roadId);
+        id: AuthController.instance.auth.currentUser?.uid, roadId: roadId);
   }
-
 
   Future<void> addToFavoriteRoads(
       {required String? id, required String? roadId}) async {
@@ -138,7 +131,7 @@ class DatabaseManager {
     }
   }
 
-Future<void> removeFromFavoriteRoads(
+  Future<void> removeFromFavoriteRoads(
       {required String? id, required String? roadId}) async {
     final docUser = FirebaseFirestore.instance.collection('User').doc(id);
 
@@ -167,13 +160,14 @@ Future<void> removeFromFavoriteRoads(
       });
     }
 
-  Future<void> removeFromMyRoadsRoads(
-      {required String? id, required String? roadId}) async {
-    final docUser = FirebaseFirestore.instance.collection('User').doc(id);
+    Future<void> removeFromMyRoadsRoads(
+        {required String? id, required String? roadId}) async {
+      final docUser = FirebaseFirestore.instance.collection('User').doc(id);
 
-    var collection = FirebaseFirestore.instance.collection('User');
-    collection.doc(id).update({
-      'myRoads': FieldValue.arrayRemove([roadId]),
-    });
+      var collection = FirebaseFirestore.instance.collection('User');
+      collection.doc(id).update({
+        'myRoads': FieldValue.arrayRemove([roadId]),
+      });
+    }
   }
 }
