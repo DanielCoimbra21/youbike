@@ -21,7 +21,7 @@ class FavRoutesList extends StatefulWidget {
 class _FavRoutesListState extends State<FavRoutesList> {
   @override
   Widget build(BuildContext context) {
-    getFavRoads(AuthController.instance.auth.currentUser?.uid);
+    getFavRoads();
     return Scaffold(
       appBar: AppBar(title: const Text('Home')),
       drawer: const CustomDrawer(),
@@ -36,8 +36,8 @@ class _FavRoutesListState extends State<FavRoutesList> {
     );
   }
 
-  getFavRoads(String? id) async {
-    roads = await db.getFavRoads(id: id);
+  getFavRoads() async {
+    roads = await db.getFavRoads();
     setState(() {});
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:youbike/DTO/road.dart';
+import 'package:youbike/Database/firestore_reference.dart';
 import 'package:youbike/auth_controller.dart';
 import 'package:youbike/register_page.dart';
 
@@ -61,9 +62,15 @@ class RouteCard extends StatelessWidget {
           Row(
             children: [
               FavoriteButton(
-                  isFavorite: false,
+                  isFavorite: road.isFavorite,
                   valueChanged: (_isFavorite) {
-                    print('Is Favorite : $_isFavorite');
+                    // if(_isFavorite){
+                    //   deleteFromFav(AuthController.instance.auth.currentUser?.uid, road.name);
+                    // }
+                    // else{
+                    //   addToFavorite(AuthController.instance.auth.currentUser?.uid, road.name);
+                    // }
+                    deleteFromFav(AuthController.instance.auth.currentUser?.uid, road.id);
                   }),
             ],
           ),
@@ -79,4 +86,15 @@ class RouteCard extends StatelessWidget {
       )),
     );
   }
+}
+
+
+deleteFromFav(String? id, String? roadId) async{
+  DatabaseManager db = DatabaseManager();
+  await db.removeFromFavoriteRoads(id: id, roadId: roadId);
+}
+
+addToFavorite(String? id, String roadId) async{
+  DatabaseManager db = DatabaseManager();
+  await db.addToFavoriteRoads(id: id, roadId: roadId);
 }
