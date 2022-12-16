@@ -32,12 +32,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
               child: Text('YouBike'),
             ),
             ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Home'),
+              leading: const Icon(Icons.route_outlined),
+              title: const Text('My routes Admin'),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                      builder: (BuildContext context) => HomePage()),
+                      builder: (BuildContext context) => MyRoutesAdmin()),
                 );
                 //Navigator.pop(context);
               },
@@ -60,7 +60,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                      builder: (BuildContext context) => MyRoutesAdmin()),
+                      builder: (BuildContext context) => RoutesList()),
                 );
                 //Navigator.pop(context);
               },
