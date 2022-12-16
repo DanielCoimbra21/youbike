@@ -142,26 +142,3 @@ deleteFromFav(String? id, String roadId) async{
   await db.removeFromFavoriteRoads(id: id, roadId: roadId);
 }
 }
-
-//  child: Padding(
-//           padding: const EdgeInsets.all(12),
-//           child: Column(
-//             children: [
-//               Row(
-//                 children: [
-//                   Padding(
-//                     padding: const EdgeInsets.only(bottom: 1),
-//                     child: Text(road.name),
-//                   ),
-//                 ],
-//               ),
-//               Row(
-//                 children: [
-//                   Text(road.name),
-//                   const Spacer(),
-//                   Text(road.distance.toString())
-//                 ],
-//               )
-//             ],
-//           ),
-//         ),

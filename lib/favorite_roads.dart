@@ -23,7 +23,7 @@ class _FavRoutesListState extends State<FavRoutesList> {
   Widget build(BuildContext context) {
     getFavRoads();
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
+      appBar: AppBar(title: const Text('My favorites')),
       drawer: const CustomDrawer(),
       body: SafeArea(
         child: ListView.builder(

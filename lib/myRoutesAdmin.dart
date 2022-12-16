@@ -32,13 +32,12 @@ class _RoutesListState extends State<MyRoutesAdmin> {
   Widget build(BuildContext context) {
     getRoads();
     return Scaffold(
-        appBar: AppBar(title: const Text('Home')),
+        appBar: AppBar(title: const Text('All Routes')),
         drawer: const CustomDrawer(),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              const Text('Roads'),
               StreamBuilder<QuerySnapshot>(
                 stream:
                     FirebaseFirestore.instance.collection('Road').snapshots(),
@@ -51,73 +50,105 @@ class _RoutesListState extends State<MyRoutesAdmin> {
                       itemCount: snap.length,
                       itemBuilder: (context, index) {
                         return Container(
-                          margin: const EdgeInsets.only(bottom: 15),
-                          height: 70,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black,
-                                  offset: Offset(2, 2),
-                                  blurRadius: 10,
+                            child: Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: Column(children: [
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 0.0),
+                                  child: Text(snap[index]['Name'],
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6),
                                 )
-                              ]),
-                          child: Stack(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(left: 20),
-                                alignment: Alignment.centerLeft,
-                                child: Text(snap[index]['Name']),
-                              ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.only(left: 20, right: 20),
-                                alignment: Alignment.centerRight,
-                                child:
-                                    Text("${snap[index]['Distance']} metres"),
-                              ),
-                              Visibility(
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    "Distance: ${snap[index]['Distance']} metres | Duration: ${snap[index]['Duration']} minutes |",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                    )),
+
+                                // Text.rich(
+                                //   WidgetSpan(
+                                //       child: Icon(
+                                //     Icons.favorite_border_outlined,
+                                //     color: Colors.pink,
+                                //   )),
+                                // ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                    "Elevation: ${snap[index]['Elevation Departure']} metres - ",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                    )),
+                                Text(
+                                    "${snap[index]['Elevation Arrival']} metres",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                    )),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                    child: Divider(
+                                  thickness: 1,
+                                ))
+                              ],
+                            ),
+                            Visibility(
                                 child: Container(
-                                  alignment: Alignment.topRight,
-                                  margin: const EdgeInsets.only(
-                                      left: 20, right: 40),
-                                  child: TextButton(
-                                    style: flatButtonStyle,
-                                    onPressed: () {
-                                      var name = snap[index]['Name'];
-                                      RouteShape routeShape = RouteShape(
-                                        polyline: snap[index]['Polyline'],
-                                        elvDeparture: snap[index]['Elevation Departure'],
-                                         elvArrival: snap[index]['Elevation Arrival'],
-                                          duration: snap[index]['Duration'],
-                                          distance: snap[index]['Distance'],
-                                          transportMode: snap[index]['Transport Mode']);
+                                    alignment: Alignment.topRight,
+                                    margin: const EdgeInsets.only(
+                                        left: 20, right: 40),
+                                    child: TextButton(
+                                      style: flatButtonStyle,
+                                      onPressed: () {
+                                        var name = snap[index]['Name'];
+                                        RouteShape routeShape = RouteShape(
+                                            polyline: snap[index]['Polyline'],
+                                            elvDeparture: snap[index]
+                                                ['Elevation Departure'],
+                                            elvArrival: snap[index]
+                                                ['Elevation Arrival'],
+                                            duration: snap[index]['Duration'],
+                                            distance: snap[index]['Distance'],
+                                            transportMode: snap[index]
+                                                ['Transport Mode']);
 
-                                      db.deleteMyRoad(snap[index].id);
-                                      final snackBar = SnackBar(
-                                        content: Text('Deleted route ${snap[index]['Name']}'),
-                                        action: SnackBarAction(
-                                          label: 'Undo',
-                                          onPressed: () {
-                                            db.addRoad(rs: routeShape, name: name, id: AuthController.instance.auth.currentUser?.uid);
-                                          },
-                                        ),
-                                      );
+                                        db.deleteMyRoad(snap[index].id);
+                                        final snackBar = SnackBar(
+                                          content: Text(
+                                              'Deleted route ${snap[index]['Name']}'),
+                                          action: SnackBarAction(
+                                            label: 'Undo',
+                                            onPressed: () {
+                                              db.addRoad(
+                                                  rs: routeShape,
+                                                  name: name,
+                                                  id: AuthController.instance
+                                                      .auth.currentUser?.uid);
+                                            },
+                                          ),
+                                        );
 
-                                      // Find the ScaffoldMessenger in the widget tree
-                                      // and use it to show a SnackBar.
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackBar);
-                                    },
-                                    child: const Icon(Icons.delete),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
+                                        // Find the ScaffoldMessenger in the widget tree
+                                        // and use it to show a SnackBar.
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      },
+                                      child: const Icon(Icons.delete),
+                                    ))),
+                          ]),
+                        ));
                       },
                     );
                   } else {
@@ -128,6 +159,103 @@ class _RoutesListState extends State<MyRoutesAdmin> {
             ],
           ),
         ));
+    // return Scaffold(
+    //     appBar: AppBar(title: const Text('My Routes')),
+    //     drawer: const CustomDrawer(),
+    //     body: SingleChildScrollView(
+    //       padding: const EdgeInsets.all(20),
+    //       child: Column(
+    //         children: [
+    //           const Text('Roads'),
+    //           StreamBuilder<QuerySnapshot>(
+    //             stream:
+    //                 FirebaseFirestore.instance.collection('Road').snapshots(),
+    //             builder: (BuildContext context,
+    //                 AsyncSnapshot<QuerySnapshot> snapshot) {
+    //               if (snapshot.hasData) {
+    //                 final snap = snapshot.data!.docs;
+    //                 return ListView.builder(
+    //                   shrinkWrap: true,
+    //                   itemCount: snap.length,
+    //                   itemBuilder: (context, index) {
+    //                     return Container(
+    //                       margin: const EdgeInsets.only(bottom: 15),
+    //                       height: 70,
+    //                       width: double.infinity,
+    //                       decoration: BoxDecoration(
+    //                           color: Colors.white,
+    //                           borderRadius: BorderRadius.circular(15),
+    //                           boxShadow: const [
+    //                             BoxShadow(
+    //                               color: Colors.black,
+    //                               offset: Offset(2, 2),
+    //                               blurRadius: 10,
+    //                             )
+    //                           ]),
+    //                       child: Stack(
+    //                         children: [
+    //                           Container(
+    //                             margin: EdgeInsets.only(left: 20),
+    //                             alignment: Alignment.centerLeft,
+    //                             child: Text(snap[index]['Name']),
+    //                           ),
+    //                           Container(
+    //                             margin:
+    //                                 const EdgeInsets.only(left: 20, right: 20),
+    //                             alignment: Alignment.centerRight,
+    //                             child:
+    //                                 Text("${snap[index]['Distance']} metres"),
+    //                           ),
+    //                           Visibility(
+    //                             child: Container(
+    //                               alignment: Alignment.topRight,
+    //                               margin: const EdgeInsets.only(
+    //                                   left: 20, right: 40),
+    //                               child: TextButton(
+    //                                 style: flatButtonStyle,
+    //                                 onPressed: () {
+    //                                   var name = snap[index]['Name'];
+    //                                   RouteShape routeShape = RouteShape(
+    //                                     polyline: snap[index]['Polyline'],
+    //                                     elvDeparture: snap[index]['Elevation Departure'],
+    //                                      elvArrival: snap[index]['Elevation Arrival'],
+    //                                       duration: snap[index]['Duration'],
+    //                                       distance: snap[index]['Distance'],
+    //                                       transportMode: snap[index]['Transport Mode']);
+
+    //                                   db.deleteMyRoad(snap[index].id);
+    //                                   final snackBar = SnackBar(
+    //                                     content: Text('Deleted route ${snap[index]['Name']}'),
+    //                                     action: SnackBarAction(
+    //                                       label: 'Undo',
+    //                                       onPressed: () {
+    //                                         db.addRoad(rs: routeShape, name: name, id: AuthController.instance.auth.currentUser?.uid);
+    //                                       },
+    //                                     ),
+    //                                   );
+
+    //                                   // Find the ScaffoldMessenger in the widget tree
+    //                                   // and use it to show a SnackBar.
+    //                                   ScaffoldMessenger.of(context)
+    //                                       .showSnackBar(snackBar);
+    //                                 },
+    //                                 child: const Icon(Icons.delete),
+    //                               ),
+    //                             ),
+    //                           ),
+    //                         ],
+    //                       ),
+    //                     );
+    //                   },
+    //                 );
+    //               } else {
+    //                 return const SizedBox();
+    //               }
+    //             },
+    //           ),
+    //         ],
+    //       ),
+    //     ));
   }
 
   getRoads() async {
