@@ -28,17 +28,38 @@ class DatabaseManager {
 
   //List Roads
   Future<List<Road?>> getRoads() async {
-    final snaphot = await roadRef.get();
+    final docUser = FirebaseFirestore.instance
+        .collection('User')
+        .doc(AuthController.instance.auth.currentUser?.uid);
+    final allRoads = await roadRef.get();
+
+    DocumentSnapshot docU = await docUser.get();
+
+    List favRoadsName = docU.get('favoriteRoads');
     List<Road> roads = [];
-    for (var doc in snaphot.docs) {
-      roads.add(doc.data());
+    
+    for (var idRoute in favRoadsName) {
+      for (var road in allRoads.docs) {
+        Road road5 = road.data();
+        road5.id = road.id;
+        if (road.id == idRoute) {
+          road5.isFavorite = true;
+        } else{
+          road5.isFavorite = false;
+          }
+        roads.add(road5);
+      }
+      //addRoad in anotherlist of roads
     }
+
     return roads;
   }
 
   //List Roads
-  Future<List<Road?>> getFavRoads({required String? id}) async {
-    final docUser = FirebaseFirestore.instance.collection('User').doc(id);
+  Future<List<Road?>> getFavRoads() async {
+    final docUser = FirebaseFirestore.instance
+        .collection('User')
+        .doc(AuthController.instance.auth.currentUser?.uid);
     final allRoads = await roadRef.get();
 
     DocumentSnapshot docU = await docUser.get();
@@ -48,7 +69,9 @@ class DatabaseManager {
     for (var idRoute in favRoadsName) {
       for (var road in allRoads.docs) {
         if (road.id == idRoute) {
-          roads.add(road.data());
+          Road road5 = road.data();
+          road5.id = road.id;
+          roads.add(road5);
         }
       }
       //addRoad in anotherlist of roads
@@ -69,7 +92,7 @@ class DatabaseManager {
       'myRoads': [],
       'name': '',
       'position': 'position',
-      'role': 'user'
+      'role': 'user',
     };
 
     await docUser.set(user);
@@ -119,30 +142,40 @@ class DatabaseManager {
   Future<void> addToFavoriteRoads(
       {required String? id, required String? roadId}) async {
     final docUser = FirebaseFirestore.instance.collection('User').doc(id);
+    final allRoads = await roadRef.get();
 
-    DocumentSnapshot doc = await docUser.get();
+    for (var road in allRoads.docs) {
+      if (road.id == roadId) {
+        DocumentSnapshot doc = await docUser.get();
 
-    List roads = doc.get('favoriteRoads');
+        //List roads = doc.get('favoriteRoads');
 
-    if (!roads.contains(roadId)) {
-      docUser.update({
-        'favoriteRoads': FieldValue.arrayUnion([roadId]),
-      });
+        docUser.update(
+          {
+            'favoriteRoads': FieldValue.arrayUnion([road.id]),
+          },
+        );
+      }
     }
   }
 
   Future<void> removeFromFavoriteRoads(
       {required String? id, required String? roadId}) async {
     final docUser = FirebaseFirestore.instance.collection('User').doc(id);
+    final allRoads = await roadRef.get();
 
-    DocumentSnapshot doc = await docUser.get();
+    for (var road in allRoads.docs) {
+      if (road.id == roadId) {
+        DocumentSnapshot doc = await docUser.get();
 
-    List roads = doc.get('favoriteRoads');
+        List roads = doc.get('favoriteRoads');
 
-    if (roads.contains(roadId)) {
-      docUser.update({
-        'favoriteRoads': FieldValue.arrayRemove([roadId]),
-      });
+        docUser.update(
+          {
+            'favoriteRoads': FieldValue.arrayRemove([road.id]),
+          },
+        );
+      }
     }
   }
 
@@ -160,14 +193,14 @@ class DatabaseManager {
       });
     }
 
-    Future<void> removeFromMyRoadsRoads(
-        {required String? id, required String? roadId}) async {
-      final docUser = FirebaseFirestore.instance.collection('User').doc(id);
+    // Future<void> removeFromMyRoadsRoads(
+    //     {required String? id, required String? roadId}) async {
+    //   final docUser = FirebaseFirestore.instance.collection('User').doc(id);
 
-      var collection = FirebaseFirestore.instance.collection('User');
-      collection.doc(id).update({
-        'myRoads': FieldValue.arrayRemove([roadId]),
-      });
-    }
+    //   var collection = FirebaseFirestore.instance.collection('User');
+    //   collection.doc(id).update({
+    //     'myRoads': FieldValue.arrayRemove([roadId]),
+    //   });
+    // }
   }
 }
