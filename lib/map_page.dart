@@ -288,7 +288,7 @@ class _MapPageState extends State<MapPage> {
                       visible: isValidateBtnVisible,
                       child: FloatingActionButton(
                         onPressed: () {
-                        _displayTextInputDialog(context)
+                        _displayTextInputDialog(context);
                         },
                         child: const Icon(Icons.save_alt),
                       ),
