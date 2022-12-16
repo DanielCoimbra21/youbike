@@ -169,7 +169,7 @@ class _MapPageState extends State<MapPage> {
                 if (currentNumbMarker < maxMarker) {
                   markers.add(
                     Marker(
-                     anchorPos: AnchorPos.exactly(Anchor(0, -10)),
+                     anchorPos: AnchorPos.exactly(Anchor(10, -10)),
                       point: latLng,
                       builder: (ctx) => const Icon(
                         Icons.location_on,
