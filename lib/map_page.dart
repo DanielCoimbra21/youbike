@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -53,7 +54,6 @@ class _MapPageState extends State<MapPage> {
   late RouteShape rs;
   final TextEditingController _textFieldController = TextEditingController();
   var routeName;
-
 
   final ButtonStyle flatButtonStyle = TextButton.styleFrom(
     foregroundColor: Colors.black87,
@@ -216,87 +216,84 @@ class _MapPageState extends State<MapPage> {
               ),
               Visibility(
                 visible: isCancelBtnVisible,
-                child: Container(
-                  alignment: Alignment.topRight,
-                  margin: const EdgeInsets.only(top: 100, right: 20),
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      markers.clear();
-                      if (latlen.isNotEmpty) {
-                        latlen.clear();
-                      }
-                      setState(() {
-                        currentNumbMarker = 0;
-                        isCancelBtnVisible = false;
-                        isUndoBtnVisible = false;
-                        isValidateBtnVisible = false;
-                      });
-                    },
-                    child: const Icon(Icons.cancel),
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: isUndoBtnVisible,
-                child: Container(
-                  alignment: Alignment.topRight,
-                  margin: const EdgeInsets.only(top: 180, right: 20),
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      if (currentNumbMarker > 0) {
-                        markers.removeLast();
-                        if (latlen.isNotEmpty) {
-                          latlen.clear();
-                        }
-                        setState(() {
-                          currentNumbMarker -= 1;
-                          if (currentNumbMarker == 0) {
-                            isUndoBtnVisible = false;
-                            isCancelBtnVisible = false;
+                child: FabCircularMenu(
+                  fabMargin: const EdgeInsets.only(bottom: 75, right: 40),
+                  animationDuration: const Duration(milliseconds: 500),
+                  ringDiameter: MediaQuery.of(context).size.width * 0.9,
+                  ringWidth: MediaQuery.of(context).size.width * 0.2,
+                  fabElevation: 9.0,
+                  ringColor: Colors.transparent,
+                  children: <Widget>[
+                    Visibility(
+                      visible: isCancelBtnVisible,
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          markers.clear();
+                          if (latlen.isNotEmpty) {
+                            latlen.clear();
                           }
-                        });
-                      }
-                      if (currentNumbMarker == 1) {
-                        isValidateBtnVisible = false;
-                      }
-                    },
-                    child: const Icon(Icons.undo),
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: isSaveVisible,
-                child: Container(
-                  alignment: Alignment.topRight,
-                  margin: const EdgeInsets.only(top: 260, right: 20),
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      _displayTextInputDialog(context);
-                    },
-                    child: const Icon(Icons.save_alt),
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: isValidateBtnVisible,
-                child: Container(
-                  alignment: Alignment.bottomRight,
-                  margin: const EdgeInsets.only(bottom: 20, right: 20),
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      futureRouteShape = fetchRouteShape();
-                      futureRouteShape.then(
-                        (value) {
                           setState(() {
-                            poly = value.polyline;
-                            isLoaded = true;
-                            route();
+                            currentNumbMarker = 0;
+                            isCancelBtnVisible = false;
+                            isUndoBtnVisible = false;
+                            isValidateBtnVisible = false;
                           });
                         },
-                      );
-                    },
-                    child: const Icon(Icons.check),
-                  ),
+                        child: const Icon(Icons.cancel),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isUndoBtnVisible,
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          if (currentNumbMarker > 0) {
+                            markers.removeLast();
+                            if (latlen.isNotEmpty) {
+                              latlen.clear();
+                            }
+                            setState(() {
+                              currentNumbMarker -= 1;
+                              if (currentNumbMarker == 0) {
+                                isUndoBtnVisible = false;
+                                isCancelBtnVisible = false;
+                              }
+                            });
+                          }
+                          if (currentNumbMarker == 1) {
+                            isValidateBtnVisible = false;
+                          }
+                        },
+                        child: const Icon(Icons.undo),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isValidateBtnVisible,
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          futureRouteShape = fetchRouteShape();
+                          futureRouteShape.then(
+                            (value) {
+                              setState(() {
+                                poly = value.polyline;
+                                isLoaded = true;
+                                route();
+                              });
+                            },
+                          );
+                        },
+                        child: const Icon(Icons.check),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isValidateBtnVisible,
+                      child: FloatingActionButton(
+                        onPressed: () {
+                        _displayTextInputDialog(context)
+                        },
+                        child: const Icon(Icons.save_alt),
+                      ),
+                    ),
+                  ],
                 ),
               )
             ],
