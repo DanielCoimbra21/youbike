@@ -9,6 +9,8 @@ class Road {
   final int duration;
   final int distance;
   final String transportMode;
+  bool? isFavorite;
+  String? id;
 
     Road({
       required this.name,
@@ -17,11 +19,14 @@ class Road {
   required this.elvArrival,
   required this.duration,
   required this.distance,
-  required this.transportMode});
+  required this.transportMode,
+  this.id,
+  this.isFavorite});
 
   //factory Road.fromJson(Map<String, dynamic> json) => _roadFromJson(json);
 
   factory Road.fromJson(Map<String, dynamic> json) => Road(
+    id: json['Id'],
     name: json['Name'],
     polyline: json['Polyline'],
     distance: json['Distance'],
@@ -32,6 +37,14 @@ class Road {
   
 
   Map<String, dynamic> toJson() => _roadToJson(this);
+
+    void set setId(String newId){
+     id = newId;
+  }
+
+  void set setFavorite(bool newFavorite){
+     isFavorite = newFavorite;
+  }
 
 }
 
@@ -48,3 +61,5 @@ Map<String, dynamic> _roadToJson(Road instance) => <String, dynamic>{
 
 Road roadFromJson(String str) => Road.fromJson(json.decode(str));
 String raodToJson(Road data) => json.encode(data.toJson());
+
+
