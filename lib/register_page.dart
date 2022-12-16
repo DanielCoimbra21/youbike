@@ -6,11 +6,19 @@ import 'package:youbike/login_page.dart';
 
 import 'auth_controller.dart';
 
-class RegisterPage extends StatelessWidget {
-  RegisterPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage>{
+
 
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+  var currentUser = "";
   DatabaseManager db = DatabaseManager();
 
   @override
@@ -130,9 +138,9 @@ class RegisterPage extends StatelessWidget {
           GestureDetector(
             onTap: () {
               AuthController.instance.register(
-                  emailController.text.trim(), passwordController.text.trim());  
-                  createUser( emailController.text.trim(), AuthController.instance.auth.currentUser?.uid);  
+                  emailController.text.trim(), passwordController.text.trim());
             },
+             
             child: Container(
               width: w * 0.5,
               height: h * 0.08,
@@ -173,6 +181,7 @@ class RegisterPage extends StatelessWidget {
       ),
     );
   }
+  
 }
 
 // add(String email, String? id) {
@@ -180,7 +189,3 @@ class RegisterPage extends StatelessWidget {
 //   db.addUser(email: email, id: id);
 // }
 
-createUser(String email, String? id){
-  DatabaseManager db = DatabaseManager();
-   db.addUser(email: email, id: id);
-}

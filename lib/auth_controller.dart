@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:youbike/login_page.dart';
 import 'package:youbike/welcome_page.dart';
 
+import 'Database/firestore_reference.dart';
+
 class AuthController extends GetxController {
   //so we can use AuthController.instance..
   static AuthController instance = Get.find();
@@ -34,8 +36,9 @@ class AuthController extends GetxController {
 
   void register(String email, password) async {
     try {
-      await auth.createUserWithEmailAndPassword(
+      var user = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
+          createUser(email, user.user?.uid);
     } catch (e) {
       Get.snackbar("About User", "User message",
           backgroundColor: Colors.redAccent,
@@ -64,4 +67,9 @@ class AuthController extends GetxController {
   void logout() async {
     await auth.signOut();
   }
+}
+
+createUser(String email, String? id) async{
+  DatabaseManager db = DatabaseManager();
+   db.addUser(email: email, id: id);
 }

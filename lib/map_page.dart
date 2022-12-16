@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 // ignore: depend_on_referenced_packages
 import 'package:latlong2/latlong.dart';
 import 'package:youbike/auth/secrets.dart';
@@ -46,13 +47,65 @@ class _MapPageState extends State<MapPage> {
   var longEnd = 0.0;
   late Future<RouteShape> futureRouteShape;
   bool isLoaded = false;
+  DatabaseManager db = DatabaseManager();
 
   late List<LatLng> latlen = <LatLng>[];
   bool isSaveVisible = false;
   late RouteShape rs;
+  final TextEditingController _textFieldController = TextEditingController();
+  var routeName;
+
+  final ButtonStyle flatButtonStyle = TextButton.styleFrom(
+    foregroundColor: Colors.black87,
+    minimumSize: const Size(88, 36),
+    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(2.0)),
+    ),
+  );
+
+  Future<void> _displayTextInputDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+          ),
+          title: const Text('Enter your tour name'),
+          content: TextField(
+            controller: _textFieldController,
+            decoration: const InputDecoration(hintText: "New tour"),
+          ),
+          actions: [
+            TextButton(
+              style: flatButtonStyle,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('CANCEL'),
+            ),
+            TextButton(
+              style: flatButtonStyle,
+              onPressed: () {
+                setState(() {
+                  routeName = _textFieldController.text;
+                });
+                addRoute(rs, routeName,
+                    AuthController.instance.auth.currentUser?.uid);
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            )
+          ],
+        );
+      },
+    );
+  }
 
   Future<RouteShape> fetchRouteShape() async {
-    final response;
+    final http.Response response;
     var uri = "";
 
     if (currentNumbMarker == 2) {
@@ -116,9 +169,10 @@ class _MapPageState extends State<MapPage> {
                 if (currentNumbMarker < maxMarker) {
                   markers.add(
                     Marker(
+                     anchorPos: AnchorPos.exactly(Anchor(10, -10)),
                       point: latLng,
                       builder: (ctx) => const Icon(
-                        Icons.flag,
+                        Icons.location_on,
                         color: Colors.red,
                         size: 40,
                       ),
@@ -233,7 +287,9 @@ class _MapPageState extends State<MapPage> {
                     Visibility(
                       visible: isValidateBtnVisible,
                       child: FloatingActionButton(
-                        onPressed: () {},
+                        onPressed: () {
+                        _displayTextInputDialog(context)
+                        },
                         child: const Icon(Icons.save_alt),
                       ),
                     ),

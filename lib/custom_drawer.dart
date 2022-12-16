@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:youbike/favorite_roads.dart';
+import 'package:youbike/myRoutesAdmin.dart';
 import 'package:youbike/routes_list.dart';
 import 'package:youbike/welcome_page.dart';
 
@@ -58,7 +60,18 @@ class _CustomDrawerState extends State<CustomDrawer> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                      builder: (BuildContext context) => RoutesList()),
+                      builder: (BuildContext context) => MyRoutesAdmin()),
+                );
+                //Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.festival),
+              title: const Text('Fav Routes'),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => FavRoutesList()),
                 );
                 //Navigator.pop(context);
               },
