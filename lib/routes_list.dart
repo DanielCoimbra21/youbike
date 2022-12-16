@@ -125,26 +125,3 @@ class _RoutesListState extends State<RoutesList> {
     setState(() {});
   }
 }
-
-//  child: Padding(
-//           padding: const EdgeInsets.all(12),
-//           child: Column(
-//             children: [
-//               Row(
-//                 children: [
-//                   Padding(
-//                     padding: const EdgeInsets.only(bottom: 1),
-//                     child: Text(road.name),
-//                   ),
-//                 ],
-//               ),
-//               Row(
-//                 children: [
-//                   Text(road.name),
-//                   const Spacer(),
-//                   Text(road.distance.toString())
-//                 ],
-//               )
-//             ],
-//           ),
-//         ),
