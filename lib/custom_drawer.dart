@@ -3,9 +3,7 @@ import 'package:youbike/favorite_roads.dart';
 import 'package:youbike/myRoutesAdmin.dart';
 import 'package:youbike/routes_list.dart';
 import 'package:youbike/welcome_page.dart';
-
 import 'auth_controller.dart';
-import 'home_page.dart';
 import 'map_page.dart';
 
 var emailController = TextEditingController();

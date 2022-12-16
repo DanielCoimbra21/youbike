@@ -10,8 +10,6 @@ import 'package:youbike/welcome_page.dart';
 import 'DTO/firebase_options.dart';
 import 'package:get/get.dart';
 import 'auth_controller.dart';
-
-import 'home_page.dart';
 import 'login_page.dart';
 import 'register_page.dart';
 import 'welcome_page.dart';
