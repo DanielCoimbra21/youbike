@@ -24,6 +24,7 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
+  final GlobalKey<FabCircularMenuState> fabKey = GlobalKey();
   var poly = '';
   var url =
       'https://wmts20.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg';
@@ -48,6 +49,9 @@ class _MapPageState extends State<MapPage> {
   late Future<RouteShape> futureRouteShape;
   bool isLoaded = false;
   DatabaseManager db = DatabaseManager();
+  final snackbar = const SnackBar(
+    content: Text('Route has been saved'),
+  );
 
   late List<LatLng> latlen = <LatLng>[];
   late RouteShape rs;
@@ -168,7 +172,7 @@ class _MapPageState extends State<MapPage> {
                 if (currentNumbMarker < maxMarker) {
                   markers.add(
                     Marker(
-                      anchorPos: AnchorPos.exactly(Anchor(10, -10)),
+                      anchorPos: AnchorPos.exactly(Anchor(10, -7)),
                       point: latLng,
                       builder: (ctx) => const Icon(
                         Icons.location_on,
@@ -211,6 +215,7 @@ class _MapPageState extends State<MapPage> {
               Visibility(
                 visible: isCancelAndDeleteVisible,
                 child: FabCircularMenu(
+                  key: fabKey,
                   fabMargin: const EdgeInsets.only(
                       bottom: 60, right: 40, left: 40, top: 40),
                   animationDuration: const Duration(milliseconds: 500),
@@ -285,7 +290,10 @@ class _MapPageState extends State<MapPage> {
                       visible: isSaveVisible,
                       child: FloatingActionButton(
                         onPressed: () {
-                          _displayTextInputDialog(context);
+                          fabKey.currentState?.close();
+                          _displayTextInputDialog(context).then((value) =>
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackbar));
                         },
                         child: const Icon(Icons.save_alt),
                       ),

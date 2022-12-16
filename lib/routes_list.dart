@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:youbike/Database/firestore_reference.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'DTO/user.dart';
+import 'auth_controller.dart';
 import 'custom_drawer.dart';
 
 DatabaseManager db = DatabaseManager();
@@ -94,7 +95,13 @@ class _RoutesListState extends State<RoutesList> {
                                 FavoriteButton(
                                     isFavorite: false,
                                     valueChanged: (_isFavorite) {
-                                      print('Is Favorite : $_isFavorite');
+                                      // if(_isFavorite){
+                                      //   deleteFromFav(AuthController.instance.auth.currentUser?.uid, snap[index]['Name']);
+                                      // } else{
+                                        addToFavorite(AuthController.instance.auth.currentUser?.uid, snap[index].id);
+                                      
+                                      print(_isFavorite);
+                                      
                                     }),
                               ],
                             ),
@@ -124,4 +131,14 @@ class _RoutesListState extends State<RoutesList> {
     roads = await db.getRoads();
     setState(() {});
   }
+
+  addToFavorite(String? id, String roadId) async{
+  DatabaseManager db = DatabaseManager();
+  await db.addToFavoriteRoads(id: id, roadId: roadId);
+}
+
+deleteFromFav(String? id, String roadId) async{
+  DatabaseManager db = DatabaseManager();
+  await db.removeFromFavoriteRoads(id: id, roadId: roadId);
+}
 }
