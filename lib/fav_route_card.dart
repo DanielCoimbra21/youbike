@@ -17,53 +17,54 @@ class RouteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.all(20),
-        child: Card(
-            child: Padding(
+      padding: const EdgeInsets.all(20),
+      child: Card(
+        child: Padding(
           padding: const EdgeInsets.all(0.0),
-          child: Column(children: [
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 0.0),
-                  child: Text(road.name,
-                      style: Theme.of(context).textTheme.headline6),
-                )
-              ],
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                    "Distance: ${road.distance} metres | Duration: ${road.duration} minutes |",
-                    style: const TextStyle(
-                      fontSize: 12,
-                    )),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 0.0),
+                    child: Text(road.name,
+                        style: Theme.of(context).textTheme.headline6),
+                  )
+                ],
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                      "Distance: ${road.distance} metres | Duration: ${road.duration} minutes |",
+                      style: const TextStyle(
+                        fontSize: 12,
+                      )),
 
-                // Text.rich(
-                //   WidgetSpan(
-                //       child: Icon(
-                //     Icons.favorite_border_outlined,
-                //     color: Colors.pink,
-                //   )),
-                // ),
-              ],
-            ),
-            Row(
-              children: [
-                Text("Elevation: ${road.elvDeparture} metres - ",
-                    style: const TextStyle(
-                      fontSize: 12,
-                    )),
-                Text("${road.elvArrival} metres",
-                    style: const TextStyle(
-                      fontSize: 12,
-                    )),
-              ],
-            ),
-            Row(
-              children: [
-                FavoriteButton(
+                  // Text.rich(
+                  //   WidgetSpan(
+                  //       child: Icon(
+                  //     Icons.favorite_border_outlined,
+                  //     color: Colors.pink,
+                  //   )),
+                  // ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text("Elevation: ${road.elvDeparture} metres - ",
+                      style: const TextStyle(
+                        fontSize: 12,
+                      )),
+                  Text("${road.elvArrival} metres",
+                      style: const TextStyle(
+                        fontSize: 12,
+                      )),
+                ],
+              ),
+              Row(
+                children: [
+                  FavoriteButton(
                     isFavorite: road.isFavorite,
                     valueChanged: (_isFavorite) {
                       // if(_isFavorite){
@@ -75,85 +76,24 @@ class RouteCard extends StatelessWidget {
                       deleteFromFav(
                           AuthController.instance.auth.currentUser?.uid,
                           road.id);
-                    }),
-              ],
-            ),
-            Row(
-              children: [
-                const Expanded(
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                children: const [
+                  Expanded(
                     child: Divider(
-                  thickness: 1,
-                ))
-              ],
-            )
-          ]),
-        )));
-
-    // return Container(
-    //   child: Card(
-    //       child: Padding(
-    //     padding: const EdgeInsets.all(0.0),
-    //     child: Column(children: [
-
-    //       Row(
-    //         children: [
-    //           Padding(
-    //             padding: const EdgeInsets.only(bottom: 0.0),
-    //             child: Text(road.name,
-    //                 style: Theme.of(context).textTheme.headline6),
-    //           )
-    //         ],
-    //       ),
-    //       Row(
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //         children: [
-    //           Text(
-    //               "Distance: ${road.distance} metres | Duration: ${road.duration} minutes |",
-    //               style: TextStyle(
-    //                 fontSize: 12,
-    //               )),
-
-    //           // Text.rich(
-    //           //   WidgetSpan(
-    //           //       child: Icon(
-    //           //     Icons.favorite_border_outlined,
-    //           //     color: Colors.pink,
-    //           //   )),
-    //           // ),
-    //         ],
-    //       ),
-    //       Row(
-    //         children: [
-    //           Text("Elevation: ${road.elvDeparture} metres - ",
-    //               style: TextStyle(
-    //                 fontSize: 12,
-    //               )),
-    //           Text("${road.elvArrival} metres",
-    //               style: TextStyle(
-    //                 fontSize: 12,
-    //               )),
-    //         ],
-    //       ),
-    //       Row(
-    //         children: [
-    //           FavoriteButton(
-    //               isFavorite: false,
-    //               valueChanged: (_isFavorite) {
-    //                 print('Is Favorite : $_isFavorite');
-    //               }),
-    //         ],
-    //       ),
-    //       Row(
-    //         children: [
-    //           Expanded(
-    //               child: Divider(
-    //             thickness: 1,
-    //           ))
-    //         ],
-    //       )
-    //     ]),
-    //   )),
-    // );
+                      thickness: 1,
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
