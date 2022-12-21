@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
@@ -37,16 +39,16 @@ class DatabaseManager {
 
     List favRoadsName = docU.get('favoriteRoads');
     List<Road> roads = [];
-    
+
     for (var idRoute in favRoadsName) {
       for (var road in allRoads.docs) {
         Road road5 = road.data();
         road5.id = road.id;
         if (road.id == idRoute) {
           road5.isFavorite = true;
-        } else{
+        } else {
           road5.isFavorite = false;
-          }
+        }
         roads.add(road5);
       }
       //addRoad in anotherlist of roads
@@ -131,8 +133,8 @@ class DatabaseManager {
 
   Future<void> deleteMyRoad(String? roadId) async {
     FirebaseFirestore.instance.collection("Road").doc(roadId).delete().then(
-          (doc) => print("Document deleted"),
-          onError: (e) => print("Error updating document $e"),
+          (doc) => log("Document deleted"),
+          onError: (e) => log("Error updating document $e"),
         );
 
     removeFromMyRoadsRoads(

@@ -12,7 +12,7 @@ import 'package:youbike/register_page.dart';
 
 class RouteCard extends StatelessWidget {
   final Road road;
-  RouteCard(this.road);
+  const RouteCard(this.road, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class RouteCard extends StatelessWidget {
               children: [
                 Text(
                     "Distance: ${road.distance} metres | Duration: ${road.duration} minutes |",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                     )),
 
@@ -52,33 +52,35 @@ class RouteCard extends StatelessWidget {
             Row(
               children: [
                 Text("Elevation: ${road.elvDeparture} metres - ",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                     )),
                 Text("${road.elvArrival} metres",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                     )),
               ],
             ),
-           Row(
-            children: [
-              FavoriteButton(
-                  isFavorite: road.isFavorite,
-                  valueChanged: (_isFavorite) {
-                    // if(_isFavorite){
-                    //   deleteFromFav(AuthController.instance.auth.currentUser?.uid, road.name);
-                    // }
-                    // else{
-                    //   addToFavorite(AuthController.instance.auth.currentUser?.uid, road.name);
-                    // }
-                    deleteFromFav(AuthController.instance.auth.currentUser?.uid, road.id);
-                  }),
-            ],
-          ),
             Row(
               children: [
-                Expanded(
+                FavoriteButton(
+                    isFavorite: road.isFavorite,
+                    valueChanged: (_isFavorite) {
+                      // if(_isFavorite){
+                      //   deleteFromFav(AuthController.instance.auth.currentUser?.uid, road.name);
+                      // }
+                      // else{
+                      //   addToFavorite(AuthController.instance.auth.currentUser?.uid, road.name);
+                      // }
+                      deleteFromFav(
+                          AuthController.instance.auth.currentUser?.uid,
+                          road.id);
+                    }),
+              ],
+            ),
+            Row(
+              children: [
+                const Expanded(
                     child: Divider(
                   thickness: 1,
                 ))
@@ -86,7 +88,6 @@ class RouteCard extends StatelessWidget {
             )
           ]),
         )));
-        
 
     // return Container(
     //   child: Card(
@@ -156,13 +157,12 @@ class RouteCard extends StatelessWidget {
   }
 }
 
-        
-deleteFromFav(String? id, String? roadId) async{
+deleteFromFav(String? id, String? roadId) async {
   DatabaseManager db = DatabaseManager();
   await db.removeFromFavoriteRoads(id: id, roadId: roadId);
 }
 
-addToFavorite(String? id, String roadId) async{
+addToFavorite(String? id, String roadId) async {
   DatabaseManager db = DatabaseManager();
   await db.addToFavoriteRoads(id: id, roadId: roadId);
 }

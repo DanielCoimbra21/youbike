@@ -35,7 +35,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                      builder: (BuildContext context) => MyRoutesAdmin()),
+                      builder: (BuildContext context) => const MyRoutesAdmin()),
                 );
                 //Navigator.pop(context);
               },
@@ -58,7 +58,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                      builder: (BuildContext context) => RoutesList()),
+                      builder: (BuildContext context) => const RoutesList()),
                 );
                 //Navigator.pop(context);
               },
@@ -69,7 +69,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                      builder: (BuildContext context) => FavRoutesList()),
+                      builder: (BuildContext context) => const FavRoutesList()),
                 );
                 //Navigator.pop(context);
               },
@@ -84,16 +84,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           WelcomePage(email: emailController.text.trim())),
                 );
                 //Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.favorite),
-              title: const Text('Favorites'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
               },
             ),
             const Divider(color: Colors.black),

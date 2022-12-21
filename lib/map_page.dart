@@ -87,7 +87,7 @@ class _MapPageState extends State<MapPage> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('CANCEL'),
+              child: const Text('CANCEL'),
             ),
             TextButton(
               style: flatButtonStyle,
@@ -99,7 +99,7 @@ class _MapPageState extends State<MapPage> {
                     AuthController.instance.auth.currentUser?.uid);
                 Navigator.pop(context);
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             )
           ],
         );
@@ -224,7 +224,8 @@ class _MapPageState extends State<MapPage> {
                   fabElevation: 9.0,
                   ringColor: Colors.transparent,
                   children: <Widget>[
-                    Visibility(child: Icon(Icons.add, size: 1), visible: false),
+                    const Visibility(
+                        child: Icon(Icons.add, size: 1), visible: false),
                     Visibility(
                       visible: isCancelAndDeleteVisible,
                       child: FloatingActionButton(

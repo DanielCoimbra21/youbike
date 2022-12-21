@@ -13,9 +13,7 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage>{
-
-
+class _RegisterPageState extends State<RegisterPage> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var currentUser = "";
@@ -72,23 +70,23 @@ class _RegisterPageState extends State<RegisterPage>{
                         BoxShadow(
                             blurRadius: 10,
                             spreadRadius: 7,
-                            offset: Offset(1, 1),
+                            offset: const Offset(1, 1),
                             color: Colors.grey.withOpacity(0.5))
                       ]),
                   child: TextField(
                     controller: emailController,
                     decoration: InputDecoration(
                         hintText: "Email",
-                        prefixIcon:
-                            const Icon(Icons.email, color: Colors.deepOrangeAccent),
+                        prefixIcon: const Icon(Icons.email,
+                            color: Colors.deepOrangeAccent),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide:
-                                const BorderSide(color: Colors.white, width: 1.0)),
+                            borderSide: const BorderSide(
+                                color: Colors.white, width: 1.0)),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide:
-                                const BorderSide(color: Colors.white, width: 1.0)),
+                            borderSide: const BorderSide(
+                                color: Colors.white, width: 1.0)),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30))),
                   ),
@@ -104,7 +102,7 @@ class _RegisterPageState extends State<RegisterPage>{
                         BoxShadow(
                             blurRadius: 10,
                             spreadRadius: 7,
-                            offset: Offset(1, 1),
+                            offset: const Offset(1, 1),
                             color: Colors.grey.withOpacity(0.5))
                       ]),
                   child: TextField(
@@ -116,12 +114,12 @@ class _RegisterPageState extends State<RegisterPage>{
                             color: Colors.deepOrangeAccent),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide:
-                                const BorderSide(color: Colors.white, width: 1.0)),
+                            borderSide: const BorderSide(
+                                color: Colors.white, width: 1.0)),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide:
-                                const BorderSide(color: Colors.white, width: 1.0)),
+                            borderSide: const BorderSide(
+                                color: Colors.white, width: 1.0)),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30))),
                   ),
@@ -140,7 +138,6 @@ class _RegisterPageState extends State<RegisterPage>{
               AuthController.instance.register(
                   emailController.text.trim(), passwordController.text.trim());
             },
-             
             child: Container(
               width: w * 0.5,
               height: h * 0.08,
@@ -160,7 +157,6 @@ class _RegisterPageState extends State<RegisterPage>{
               ),
             ),
           ),
-          
           SizedBox(height: w * 0.15),
           RichText(
               text: TextSpan(
@@ -175,13 +171,12 @@ class _RegisterPageState extends State<RegisterPage>{
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => Get.to(() => LoginPage()))
+                      ..onTap = () => Get.to(() => const LoginPage()))
               ]))
         ]),
       ),
     );
   }
-  
 }
 
 // add(String email, String? id) {

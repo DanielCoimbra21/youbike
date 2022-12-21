@@ -46,6 +46,7 @@ class _RoutesListState extends State<MyRoutesAdmin> {
                   if (snapshot.hasData) {
                     final snap = snapshot.data!.docs;
                     return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: snap.length,
                       itemBuilder: (context, index) {
@@ -69,7 +70,7 @@ class _RoutesListState extends State<MyRoutesAdmin> {
                               children: [
                                 Text(
                                     "Distance: ${snap[index]['Distance']} metres | Duration: ${snap[index]['Duration']} minutes |",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
                                     )),
 
@@ -86,18 +87,18 @@ class _RoutesListState extends State<MyRoutesAdmin> {
                               children: [
                                 Text(
                                     "Elevation: ${snap[index]['Elevation Departure']} metres - ",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
                                     )),
                                 Text(
                                     "${snap[index]['Elevation Arrival']} metres",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
                                     )),
                               ],
                             ),
                             Row(
-                              children: [
+                              children: const [
                                 Expanded(
                                     child: Divider(
                                   thickness: 1,

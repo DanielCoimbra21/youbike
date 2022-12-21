@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:youbike/Database/firestore_reference.dart';
@@ -40,6 +42,7 @@ class _RoutesListState extends State<RoutesList> {
                   if (snapshot.hasData) {
                     final snap = snapshot.data!.docs;
                     return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: snap.length,
                       itemBuilder: (context, index) {
@@ -63,7 +66,7 @@ class _RoutesListState extends State<RoutesList> {
                               children: [
                                 Text(
                                     "Distance: ${snap[index]['Distance']} metres | Duration: ${snap[index]['Duration']} minutes |",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
                                     )),
 
@@ -80,12 +83,12 @@ class _RoutesListState extends State<RoutesList> {
                               children: [
                                 Text(
                                     "Elevation: ${snap[index]['Elevation Departure']} metres - ",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
                                     )),
                                 Text(
                                     "${snap[index]['Elevation Arrival']} metres",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
                                     )),
                               ],
@@ -98,15 +101,17 @@ class _RoutesListState extends State<RoutesList> {
                                       // if(_isFavorite){
                                       //   deleteFromFav(AuthController.instance.auth.currentUser?.uid, snap[index]['Name']);
                                       // } else{
-                                        addToFavorite(AuthController.instance.auth.currentUser?.uid, snap[index].id);
-                                      
-                                      print(_isFavorite);
-                                      
+                                      addToFavorite(
+                                          AuthController
+                                              .instance.auth.currentUser?.uid,
+                                          snap[index].id);
+
+                                      log(_isFavorite.toString());
                                     }),
                               ],
                             ),
                             Row(
-                              children: [
+                              children: const [
                                 Expanded(
                                     child: Divider(
                                   thickness: 1,
@@ -132,13 +137,13 @@ class _RoutesListState extends State<RoutesList> {
     setState(() {});
   }
 
-  addToFavorite(String? id, String roadId) async{
-  DatabaseManager db = DatabaseManager();
-  await db.addToFavoriteRoads(id: id, roadId: roadId);
-}
+  addToFavorite(String? id, String roadId) async {
+    DatabaseManager db = DatabaseManager();
+    await db.addToFavoriteRoads(id: id, roadId: roadId);
+  }
 
-deleteFromFav(String? id, String roadId) async{
-  DatabaseManager db = DatabaseManager();
-  await db.removeFromFavoriteRoads(id: id, roadId: roadId);
-}
+  deleteFromFav(String? id, String roadId) async {
+    DatabaseManager db = DatabaseManager();
+    await db.removeFromFavoriteRoads(id: id, roadId: roadId);
+  }
 }
