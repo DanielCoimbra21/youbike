@@ -31,7 +31,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
             ListTile(
               leading: const Icon(Icons.route_outlined),
-              title: const Text('My routes Admin'),
+              title: const Text('My routes'),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -54,7 +54,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
             ListTile(
               leading: const Icon(Icons.add_road),
-              title: const Text('My Routes'),
+              title: const Text('All Routes'),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -64,8 +64,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.festival),
-              title: const Text('Fav Routes'),
+              leading: const Icon(Icons.favorite),
+              title: const Text('Favourites Routes'),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(

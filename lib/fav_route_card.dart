@@ -10,6 +10,8 @@ import 'package:youbike/Database/firestore_reference.dart';
 import 'package:youbike/auth_controller.dart';
 import 'package:youbike/register_page.dart';
 
+import 'mapRouteDisplay.dart';
+
 class RouteCard extends StatelessWidget {
   final Road road;
   const RouteCard(this.road, {super.key});
@@ -17,80 +19,88 @@ class RouteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.all(10),
-        child: Card(
-            color: Colors.transparent,
-            elevation: 0,
-            child: Padding(
+      padding: const EdgeInsets.all(10),
+      child: Card(
+        color: Colors.transparent,
+        elevation: 0,
+        child: Padding(
           padding: const EdgeInsets.all(0.0),
           child: Column(
             children: [
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 0.0),
-                  child: Text(road.name,
-                      style: Theme.of(context).textTheme.headline6),
-                )
-              ],
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                    "Distance: ${road.distance} metres | Duration: ${road.duration} minutes |",
-                    style: const TextStyle(
-                      fontSize: 12,
-                    )),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 0.0),
+                    child: Text(road.name,
+                        style: Theme.of(context).textTheme.headline6),
+                  )
+                ],
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                      "Distance: ${road.distance} metres | Duration: ${road.duration} minutes |",
+                      style: const TextStyle(
+                        fontSize: 12,
+                      )),
 
-                // Text.rich(
-                //   WidgetSpan(
-                //       child: Icon(
-                //     Icons.favorite_border_outlined,
-                //     color: Colors.pink,
-                //   )),
-                // ),
-              ],
-            ),
-            Row(
-              children: [
-                Text("Elevation: ${road.elvDeparture} metres - ",
-                    style: const TextStyle(
-                      fontSize: 12,
-                    )),
-                Text("${road.elvArrival} metres",
-                    style: const TextStyle(
-                      fontSize: 12,
-                    )),
-              ],
-            ),
-            Row(
-              children: [
-                FavoriteButton(
+                  // Text.rich(
+                  //   WidgetSpan(
+                  //       child: Icon(
+                  //     Icons.favorite_border_outlined,
+                  //     color: Colors.pink,
+                  //   )),
+                  // ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text("Elevation: ${road.elvDeparture} metres - ",
+                      style: const TextStyle(
+                        fontSize: 12,
+                      )),
+                  Text("${road.elvArrival} metres",
+                      style: const TextStyle(
+                        fontSize: 12,
+                      )),
+                ],
+              ),
+              Row(
+                children: [
+                  FavoriteButton(
                     isFavorite: road.isFavorite,
                     valueChanged: (_isFavorite) {
-                      if(_isFavorite){
-                        deleteFromFav(AuthController.instance.auth.currentUser?.uid, road.name);
-                      }
-                      else{
-                        addToFavorite(AuthController.instance.auth.currentUser?.uid, road.name);
+                      if (_isFavorite) {
+                        deleteFromFav(
+                            AuthController.instance.auth.currentUser?.uid,
+                            road.name);
+                      } else {
+                        addToFavorite(
+                            AuthController.instance.auth.currentUser?.uid,
+                            road.name);
                       }
                       // deleteFromFav(
                       //     AuthController.instance.auth.currentUser?.uid,
                       //     road.id);
                     },
                   ),
-              ],
-            ),
-            Row(
+                  IconButton(
+                      alignment: Alignment.centerRight,
+                      onPressed: () => Get.to(
+                          () => DisplayRouteMap(polyline: road.polyline)),
+                      icon: const Icon(Icons.pedal_bike)),
+                ],
+              ),
+              Row(
                 children: const [
                   Expanded(
                     child: Divider(
-                  thickness: 1,
+                      thickness: 1,
                     ),
                   )
-              ],
-            )
+                ],
+              )
             ],
           ),
         ),
