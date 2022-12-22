@@ -40,16 +40,39 @@ class DatabaseManager {
     List favRoadsName = docU.get('favoriteRoads');
     List<Road> roads = [];
 
-    for (var idRoute in favRoadsName) {
+
+
+  for(var road in allRoads.docs){
+    Road road5 = road.data();
+    road5.id = road.id;
+    if(favRoadsName.contains(road.id))
+    {
+      road5.isFavorite = true;
+    }
+    roads.add(road5);
+  }
+    return roads;
+  }
+
+  //List Roads
+  Future<List<Road?>> getMyRoads() async {
+    final docUser = FirebaseFirestore.instance
+        .collection('User')
+        .doc(AuthController.instance.auth.currentUser?.uid);
+    final allRoads = await roadRef.get();
+
+    DocumentSnapshot docU = await docUser.get();
+
+    List myRoads = docU.get('myRoads');
+    List<Road> roads = [];
+
+    for (var idRoute in myRoads) {
       for (var road in allRoads.docs) {
-        Road road5 = road.data();
-        road5.id = road.id;
         if (road.id == idRoute) {
-          road5.isFavorite = true;
-        } else {
-          road5.isFavorite = false;
+          Road road5 = road.data();
+          road5.id = road.id;
+          roads.add(road5);
         }
-        roads.add(road5);
       }
       //addRoad in anotherlist of roads
     }
@@ -73,6 +96,7 @@ class DatabaseManager {
         if (road.id == idRoute) {
           Road road5 = road.data();
           road5.id = road.id;
+          road5.isFavorite = true;
           roads.add(road5);
         }
       }
@@ -187,7 +211,7 @@ class DatabaseManager {
 
     DocumentSnapshot doc = await docUser.get();
 
-    List<String> roads = doc.get('myRoads');
+    var roads = doc.get('myRoads');
 
     if (roads.contains(roadId)) {
       docUser.update({
