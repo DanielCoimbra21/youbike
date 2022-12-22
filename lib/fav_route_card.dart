@@ -70,15 +70,17 @@ class RouteCard extends StatelessWidget {
                 children: [
                   FavoriteButton(
                     isFavorite: road.isFavorite,
-                    valueChanged: (_isFavorite) {
-                      if (_isFavorite) {
+                    valueChanged: (isFavorite) {
+                      if (road.isFavorite) {
+                        road.isFavorite = false;
                         deleteFromFav(
                             AuthController.instance.auth.currentUser?.uid,
-                            road.name);
+                            road.id);
                       } else {
+                        road.isFavorite = true;
                         addToFavorite(
                             AuthController.instance.auth.currentUser?.uid,
-                            road.name);
+                            road.id);
                       }
                       // deleteFromFav(
                       //     AuthController.instance.auth.currentUser?.uid,
@@ -114,7 +116,7 @@ deleteFromFav(String? id, String? roadId) async {
   await db.removeFromFavoriteRoads(id: id, roadId: roadId);
 }
 
-addToFavorite(String? id, String roadId) async {
+addToFavorite(String? id, String? roadId) async {
   DatabaseManager db = DatabaseManager();
   await db.addToFavoriteRoads(id: id, roadId: roadId);
 }
