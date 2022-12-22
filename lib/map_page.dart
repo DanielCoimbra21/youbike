@@ -1,13 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 // ignore: depend_on_referenced_packages
 import 'package:latlong2/latlong.dart';
 import 'package:youbike/auth/secrets.dart';
+import 'package:youbike/auth_controller.dart';
 import 'package:youbike/polyline/flexible_polyline.dart';
-import 'package:youbike/route_shape.dart';
+import 'package:youbike/DTO/route_shape.dart';
+import 'Database/firestore_reference.dart';
 import 'custom_drawer.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
@@ -20,6 +24,7 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
+  final GlobalKey<FabCircularMenuState> fabKey = GlobalKey();
   var poly = '';
   var url =
       'https://wmts20.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg';
@@ -32,25 +37,101 @@ class _MapPageState extends State<MapPage> {
   var end;
   // ignore: prefer_typing_uninitialized_variables
   List<Marker> markers = <Marker>[];
-  var maxMarker = 2;
+  var maxMarker = 10;
   var currentNumbMarker = 0;
-  bool isCancelBtnVisible = false;
-  bool isUndoBtnVisible = false;
+  bool isCancelAndDeleteVisible = false;
+  bool isValidateBtnVisible = false;
+  bool isSaveVisible = false;
   var latStart = 0.0;
   var longStart = 0.0;
   var latEnd = 0.0;
   var longEnd = 0.0;
   late Future<RouteShape> futureRouteShape;
   bool isLoaded = false;
-  late List<LatLng> latlen;
+  DatabaseManager db = DatabaseManager();
+  final snackbar = const SnackBar(
+    content: Text('Route has been saved'),
+  );
+
+  late List<LatLng> latlen = <LatLng>[];
+  late RouteShape rs;
+  final TextEditingController _textFieldController = TextEditingController();
+  var routeName;
+
+  final ButtonStyle flatButtonStyle = TextButton.styleFrom(
+    foregroundColor: Colors.black87,
+    minimumSize: const Size(88, 36),
+    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(2.0)),
+    ),
+  );
+
+  Future<void> _displayTextInputDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+          ),
+          title: const Text('Enter your tour name'),
+          content: TextField(
+            controller: _textFieldController,
+            decoration: const InputDecoration(hintText: "New tour"),
+          ),
+          actions: [
+            TextButton(
+              style: flatButtonStyle,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('CANCEL'),
+            ),
+            TextButton(
+              style: flatButtonStyle,
+              onPressed: () {
+                setState(() {
+                  routeName = _textFieldController.text;
+                });
+                addRoute(rs, routeName,
+                    AuthController.instance.auth.currentUser?.uid);
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            )
+          ],
+        );
+      },
+    );
+  }
 
   Future<RouteShape> fetchRouteShape() async {
-    final response = await http.get(Uri.parse(
-        "https://router.hereapi.com/v8/routes?transportMode=bicycle&origin=$latStart,$longStart&destination=$latEnd,$longEnd&return=polyline,elevation,summary&apikey=$apiHERE"));
+    final http.Response response;
+    var uri = "";
+
+    if (currentNumbMarker == 2) {
+      uri =
+          "https://router.hereapi.com/v8/routes?transportMode=bicycle&origin=${markers.first.point.latitude},${markers.first.point.longitude}&destination=${markers.last.point.latitude},${markers.last.point.longitude}&return=polyline,elevation,summary&apikey=$apiHERE";
+    } else {
+      var via = "";
+      for (int i = 1; i <= markers.length - 2; i++) {
+        via +=
+            "&via=${markers[i].point.latitude},${markers[i].point.longitude}!passThrough=true";
+      }
+      uri =
+          "https://router.hereapi.com/v8/routes?transportMode=bicycle&return=polyline,summary,elevation,passthrough&origin=${markers.first.point.latitude},${markers.first.point.longitude}&destination=${markers.last.point.latitude},${markers.last.point.longitude}&$via&apikey=$apiHERE";
+    }
+    log(uri);
+
+    response = await http.get(Uri.parse(uri));
 
     if (response.statusCode == 200) {
-      return RouteShape.fromJson(jsonDecode(response.body));
+      rs = RouteShape.fromJson(jsonDecode(response.body));
+      return rs;
     } else {
+      log(response.statusCode.toString());
       throw Exception('Failed to load routeShape');
     }
   }
@@ -91,9 +172,10 @@ class _MapPageState extends State<MapPage> {
                 if (currentNumbMarker < maxMarker) {
                   markers.add(
                     Marker(
+                      anchorPos: AnchorPos.exactly(Anchor(10, -7)),
                       point: latLng,
                       builder: (ctx) => const Icon(
-                        Icons.flag,
+                        Icons.location_on,
                         color: Colors.red,
                         size: 40,
                       ),
@@ -101,34 +183,17 @@ class _MapPageState extends State<MapPage> {
                   );
                   setState(() {
                     currentNumbMarker += 1;
-                    isCancelBtnVisible = true;
-                    isUndoBtnVisible = true;
+                    isCancelAndDeleteVisible = true;
                   });
 
-                  if (currentNumbMarker == 2) {
-                    latStart = markers[0].point.latitude;
-                    longStart = markers[0].point.longitude;
-                    latEnd = markers[1].point.latitude;
-                    longEnd = markers[1].point.longitude;
-                    futureRouteShape = fetchRouteShape();
-                    futureRouteShape.then(
-                      (value) {
-                        setState(() {
-                          poly = value.polyline;
-                          isLoaded = true;
-                          route();
-                        });
-                      },
-                    );
+                  if (currentNumbMarker >= 2) {
+                    isValidateBtnVisible = true;
                   }
                 }
+                isSaveVisible = false;
               },
             ),
             nonRotatedChildren: [
-              AttributionWidget.defaultWidget(
-                source: 'OpenStreetMap contributors',
-                onSourceTapped: null,
-              ),
               Container(
                 alignment: Alignment.topRight,
                 margin: const EdgeInsets.all(20),
@@ -148,47 +213,99 @@ class _MapPageState extends State<MapPage> {
                 ),
               ),
               Visibility(
-                visible: isCancelBtnVisible,
-                child: Container(
-                  alignment: Alignment.topRight,
-                  margin: const EdgeInsets.only(top: 100, right: 20),
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      markers.clear();
-                      latlen.clear();
-                      setState(() {
-                        currentNumbMarker = 0;
-                        isCancelBtnVisible = false;
-                        isUndoBtnVisible = false;
-                      });
-                    },
-                    child: const Icon(Icons.cancel),
-                  ),
+                visible: isCancelAndDeleteVisible,
+                child: FabCircularMenu(
+                  key: fabKey,
+                  fabMargin: const EdgeInsets.only(
+                      bottom: 60, right: 40, left: 40, top: 40),
+                  animationDuration: const Duration(milliseconds: 500),
+                  ringDiameter: MediaQuery.of(context).size.width,
+                  ringWidth: MediaQuery.of(context).size.width * 0.2,
+                  fabElevation: 9.0,
+                  ringColor: Colors.transparent,
+                  children: <Widget>[
+                    const Visibility(
+                        child: Icon(Icons.add, size: 1), visible: false),
+                    Visibility(
+                      visible: isCancelAndDeleteVisible,
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          markers.clear();
+                          if (latlen.isNotEmpty) {
+                            latlen.clear();
+                          }
+                          setState(() {
+                            currentNumbMarker = 0;
+                            isCancelAndDeleteVisible = false;
+                            isValidateBtnVisible = false;
+                            isSaveVisible = false;
+                          });
+                        },
+                        child: const Icon(Icons.cancel),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isCancelAndDeleteVisible,
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          if (currentNumbMarker > 0) {
+                            markers.removeLast();
+                            if (latlen.isNotEmpty) {
+                              latlen.clear();
+                            }
+                            setState(() {
+                              currentNumbMarker -= 1;
+                              isSaveVisible = false;
+                              if (currentNumbMarker == 0) {
+                                isCancelAndDeleteVisible = false;
+                              }
+                            });
+                          }
+                          if (currentNumbMarker == 1) {
+                            isValidateBtnVisible = false;
+                          }
+                        },
+                        child: const Icon(Icons.undo),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isValidateBtnVisible,
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          futureRouteShape = fetchRouteShape();
+                          futureRouteShape.then(
+                            (value) {
+                              setState(() {
+                                poly = value.polyline;
+                                isLoaded = true;
+                                route();
+                                isSaveVisible = true;
+                              });
+                            },
+                          );
+                        },
+                        child: const Icon(Icons.check),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isSaveVisible,
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          fabKey.currentState?.close();
+                          _displayTextInputDialog(context).then((value) =>
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackbar));
+                        },
+                        child: const Icon(Icons.save_alt),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Visibility(
-                visible: isUndoBtnVisible,
-                child: Container(
-                  alignment: Alignment.topRight,
-                  margin: const EdgeInsets.only(top: 180, right: 20),
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      if (currentNumbMarker > 0) {
-                        markers.removeLast();
-                        latlen.clear();
-                        setState(() {
-                          currentNumbMarker -= 1;
-                          if (currentNumbMarker == 0) {
-                            isUndoBtnVisible = false;
-                            isCancelBtnVisible = false;
-                          }
-                        });
-                      }
-                    },
-                    child: const Icon(Icons.undo),
-                  ),
-                ),
-              )
+              AttributionWidget.defaultWidget(
+                source: 'OpenStreetMap contributors',
+                onSourceTapped: null,
+              ),
             ],
             mapController: MapController(),
             children: [
@@ -230,4 +347,9 @@ class _MapPageState extends State<MapPage> {
       ),
     );
   }
+}
+
+addRoute(RouteShape rs, String name, String? id) {
+  DatabaseManager db = DatabaseManager();
+  db.addRoad(rs: rs, name: name, id: id);
 }

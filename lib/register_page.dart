@@ -1,15 +1,23 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:youbike/Database/firestore_reference.dart';
 import 'package:youbike/login_page.dart';
 
 import 'auth_controller.dart';
 
-class RegisterPage extends StatelessWidget {
-  RegisterPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+  var currentUser = "";
+  DatabaseManager db = DatabaseManager();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +30,7 @@ class RegisterPage extends StatelessWidget {
           Container(
             width: w,
             height: h * 0.3,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("img/loginBackground.png"),
                     fit: BoxFit.cover)),
@@ -31,7 +39,7 @@ class RegisterPage extends StatelessWidget {
                 SizedBox(
                   height: h * 0.18,
                 ),
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 44,
                   backgroundImage: AssetImage("img/backProfile.jpeg"),
                 )
@@ -47,11 +55,11 @@ class RegisterPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "Create account",
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 Container(
@@ -62,28 +70,28 @@ class RegisterPage extends StatelessWidget {
                         BoxShadow(
                             blurRadius: 10,
                             spreadRadius: 7,
-                            offset: Offset(1, 1),
+                            offset: const Offset(1, 1),
                             color: Colors.grey.withOpacity(0.5))
                       ]),
                   child: TextField(
                     controller: emailController,
                     decoration: InputDecoration(
                         hintText: "Email",
-                        prefixIcon:
-                            Icon(Icons.email, color: Colors.deepOrangeAccent),
+                        prefixIcon: const Icon(Icons.email,
+                            color: Colors.deepOrangeAccent),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 1.0)),
+                            borderSide: const BorderSide(
+                                color: Colors.white, width: 1.0)),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 1.0)),
+                            borderSide: const BorderSide(
+                                color: Colors.white, width: 1.0)),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30))),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -94,7 +102,7 @@ class RegisterPage extends StatelessWidget {
                         BoxShadow(
                             blurRadius: 10,
                             spreadRadius: 7,
-                            offset: Offset(1, 1),
+                            offset: const Offset(1, 1),
                             color: Colors.grey.withOpacity(0.5))
                       ]),
                   child: TextField(
@@ -102,27 +110,27 @@ class RegisterPage extends StatelessWidget {
                     obscureText: true,
                     decoration: InputDecoration(
                         hintText: "Password",
-                        prefixIcon: Icon(Icons.password,
+                        prefixIcon: const Icon(Icons.password,
                             color: Colors.deepOrangeAccent),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 1.0)),
+                            borderSide: const BorderSide(
+                                color: Colors.white, width: 1.0)),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 1.0)),
+                            borderSide: const BorderSide(
+                                color: Colors.white, width: 1.0)),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30))),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           GestureDetector(
@@ -135,10 +143,10 @@ class RegisterPage extends StatelessWidget {
               height: h * 0.08,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  image: DecorationImage(
+                  image: const DecorationImage(
                       image: AssetImage("img/btnBackground.png"),
                       fit: BoxFit.cover)),
-              child: Center(
+              child: const Center(
                 child: Text(
                   "Sign up",
                   style: TextStyle(
@@ -158,15 +166,21 @@ class RegisterPage extends StatelessWidget {
                   children: [
                 TextSpan(
                     text: " Login",
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => Get.to(() => LoginPage()))
+                      ..onTap = () => Get.to(() => const LoginPage()))
               ]))
         ]),
       ),
     );
   }
 }
+
+// add(String email, String? id) {
+//   DatabaseManager db = DatabaseManager();
+//   db.addUser(email: email, id: id);
+// }
+
