@@ -21,89 +21,104 @@ class RouteCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       child: Card(
-        color: Colors.transparent,
         elevation: 0,
-        child: Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 0.0),
-                    child: Text(road.name,
-                        style: Theme.of(context).textTheme.headline6),
-                  )
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                      "Distance: ${road.distance} metres | Duration: ${road.duration} minutes |",
-                      style: const TextStyle(
-                        fontSize: 12,
-                      )),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            gradient: const LinearGradient(
+              colors: [
+                Color.fromARGB(255, 54, 128, 224),
+                Color.fromARGB(255, 116, 177, 226),
+                Color.fromARGB(255, 114, 164, 204),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Center(
+                        child: Text(road.name,
+                            style: Theme.of(context).textTheme.headline6),
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        "Distance: ${road.distance} metres | Duration: ${road.duration} minutes |",
+                        style: const TextStyle(
+                          fontSize: 12,
+                        )),
 
-                  // Text.rich(
-                  //   WidgetSpan(
-                  //       child: Icon(
-                  //     Icons.favorite_border_outlined,
-                  //     color: Colors.pink,
-                  //   )),
-                  // ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text("Elevation: ${road.elvDeparture} metres - ",
-                      style: const TextStyle(
-                        fontSize: 12,
-                      )),
-                  Text("${road.elvArrival} metres",
-                      style: const TextStyle(
-                        fontSize: 12,
-                      )),
-                ],
-              ),
-              Row(
-                children: [
-                  FavoriteButton(
-                    isFavorite: road.isFavorite,
-                    valueChanged: (isFavorite) {
-                      if (road.isFavorite) {
-                        road.isFavorite = false;
-                        deleteFromFav(
-                            AuthController.instance.auth.currentUser?.uid,
-                            road.id);
-                      } else {
-                        road.isFavorite = true;
-                        addToFavorite(
-                            AuthController.instance.auth.currentUser?.uid,
-                            road.id);
-                      }
-                      // deleteFromFav(
-                      //     AuthController.instance.auth.currentUser?.uid,
-                      //     road.id);
-                    },
-                  ),
-                  IconButton(
-                      alignment: Alignment.centerRight,
-                      onPressed: () => Get.to(
-                          () => DisplayRouteMap(polyline: road.polyline)),
-                      icon: const Icon(Icons.pedal_bike)),
-                ],
-              ),
-              Row(
-                children: const [
-                  Expanded(
-                    child: Divider(
-                      thickness: 1,
+                    // Text.rich(
+                    //   WidgetSpan(
+                    //       child: Icon(
+                    //     Icons.favorite_border_outlined,
+                    //     color: Colors.pink,
+                    //   )),
+                    // ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text("Elevation: ${road.elvDeparture} metres - ",
+                        style: const TextStyle(
+                          fontSize: 12,
+                        )),
+                    Text("${road.elvArrival} metres",
+                        style: const TextStyle(
+                          fontSize: 12,
+                        )),
+                  ],
+                ),
+                Row(
+                  children: [
+                    FavoriteButton(
+                      isFavorite: road.isFavorite,
+                      valueChanged: (isFavorite) {
+                        if (road.isFavorite) {
+                          road.isFavorite = false;
+                          deleteFromFav(
+                              AuthController.instance.auth.currentUser?.uid,
+                              road.id);
+                        } else {
+                          road.isFavorite = true;
+                          addToFavorite(
+                              AuthController.instance.auth.currentUser?.uid,
+                              road.id);
+                        }
+                        // deleteFromFav(
+                        //     AuthController.instance.auth.currentUser?.uid,
+                        //     road.id);
+                      },
                     ),
-                  )
-                ],
-              )
-            ],
+                    IconButton(
+                        alignment: Alignment.centerRight,
+                        onPressed: () => Get.to(
+                            () => DisplayRouteMap(polyline: road.polyline)),
+                        icon: const Icon(Icons.pedal_bike)),
+                  ],
+                ),
+                Row(
+                  children: const [
+                    Expanded(
+                      child: Divider(
+                        thickness: 1,
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
