@@ -17,78 +17,80 @@ class RouteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
-      child: Card(
-        child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Card(
+            color: Colors.transparent,
+            elevation: 0,
+            child: Padding(
           padding: const EdgeInsets.all(0.0),
           child: Column(
             children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 0.0),
-                    child: Text(road.name,
-                        style: Theme.of(context).textTheme.headline6),
-                  )
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                      "Distance: ${road.distance} metres | Duration: ${road.duration} minutes |",
-                      style: const TextStyle(
-                        fontSize: 12,
-                      )),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 0.0),
+                  child: Text(road.name,
+                      style: Theme.of(context).textTheme.headline6),
+                )
+              ],
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                    "Distance: ${road.distance} metres | Duration: ${road.duration} minutes |",
+                    style: const TextStyle(
+                      fontSize: 12,
+                    )),
 
-                  // Text.rich(
-                  //   WidgetSpan(
-                  //       child: Icon(
-                  //     Icons.favorite_border_outlined,
-                  //     color: Colors.pink,
-                  //   )),
-                  // ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text("Elevation: ${road.elvDeparture} metres - ",
-                      style: const TextStyle(
-                        fontSize: 12,
-                      )),
-                  Text("${road.elvArrival} metres",
-                      style: const TextStyle(
-                        fontSize: 12,
-                      )),
-                ],
-              ),
-              Row(
-                children: [
-                  FavoriteButton(
+                // Text.rich(
+                //   WidgetSpan(
+                //       child: Icon(
+                //     Icons.favorite_border_outlined,
+                //     color: Colors.pink,
+                //   )),
+                // ),
+              ],
+            ),
+            Row(
+              children: [
+                Text("Elevation: ${road.elvDeparture} metres - ",
+                    style: const TextStyle(
+                      fontSize: 12,
+                    )),
+                Text("${road.elvArrival} metres",
+                    style: const TextStyle(
+                      fontSize: 12,
+                    )),
+              ],
+            ),
+            Row(
+              children: [
+                FavoriteButton(
                     isFavorite: road.isFavorite,
                     valueChanged: (_isFavorite) {
-                      // if(_isFavorite){
-                      //   deleteFromFav(AuthController.instance.auth.currentUser?.uid, road.name);
-                      // }
-                      // else{
-                      //   addToFavorite(AuthController.instance.auth.currentUser?.uid, road.name);
-                      // }
-                      deleteFromFav(
-                          AuthController.instance.auth.currentUser?.uid,
-                          road.id);
+                      if(_isFavorite){
+                        deleteFromFav(AuthController.instance.auth.currentUser?.uid, road.name);
+                      }
+                      else{
+                        addToFavorite(AuthController.instance.auth.currentUser?.uid, road.name);
+                      }
+                      // deleteFromFav(
+                      //     AuthController.instance.auth.currentUser?.uid,
+                      //     road.id);
                     },
                   ),
-                ],
-              ),
-              Row(
+              ],
+            ),
+            Row(
                 children: const [
                   Expanded(
                     child: Divider(
-                      thickness: 1,
+                  thickness: 1,
                     ),
                   )
-                ],
-              )
+              ],
+            )
             ],
           ),
         ),
