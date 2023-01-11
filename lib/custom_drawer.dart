@@ -4,6 +4,7 @@ import 'package:youbike/myRoutesAdmin.dart';
 import 'package:youbike/routes_list.dart';
 import 'package:youbike/welcome_page.dart';
 import 'Database/firestore_reference.dart';
+import 'about_page.dart';
 import 'auth_controller.dart';
 import 'map_page.dart';
 
@@ -112,10 +113,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
               leading: const Icon(Icons.info),
               title: const Text('About'),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
+                 Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => const AboutPage()),
+                );
               },
             ),
             ListTile(
