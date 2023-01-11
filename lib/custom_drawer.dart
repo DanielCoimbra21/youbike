@@ -5,6 +5,7 @@ import 'package:youbike/myRoutesAdmin.dart';
 import 'package:youbike/routes_list.dart';
 import 'package:youbike/welcome_page.dart';
 import 'Database/firestore_reference.dart';
+import 'about_page.dart';
 import 'auth_controller.dart';
 import 'map_page.dart';
 
@@ -105,37 +106,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 //Navigator.pop(context);
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Profile'),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          WelcomePage(email: emailController.text.trim())),
-                );
-                //Navigator.pop(context);
-              },
-            ),
             const Divider(color: Colors.black),
             ListTile(
               leading: const Icon(Icons.info),
               title: const Text('About'),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
+                 Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => const AboutPage()),
+                );
               },
             ),
             ListTile(
