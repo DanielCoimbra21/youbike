@@ -23,11 +23,6 @@ class DatabaseManager {
             toFirestore: (user, _) => user.toJson(),
           );
 
-  // final userRef = FirebaseFirestore.instance.collection('User').withConverter<User>(
-  //     fromFirestore: (snapshot, _) => Road.fromJson(snapshot.data()!),
-  //     toFirestore: (road, _) => road.toJson(),
-  //   );
-
   //List Roads
   Future<List<Road?>> getRoads() async {
     final docUser = FirebaseFirestore.instance
@@ -52,6 +47,17 @@ class DatabaseManager {
     roads.add(road5);
   }
     return roads;
+  }
+
+  //Get User 
+  Future<String> getUserRole() async{
+        final docUser = FirebaseFirestore.instance
+        .collection('User')
+        .doc(AuthController.instance.auth.currentUser?.uid);
+
+        DocumentSnapshot docU = await docUser.get();
+        return docU.get('role');
+
   }
 
   //List Roads
@@ -122,6 +128,17 @@ class DatabaseManager {
     };
 
     await docUser.set(user);
+  }
+
+  //Update Road Name
+  Future<void> updateRoadName(String? id, String name) async {
+
+    // final road = <String, String>{
+    //   "Name": name
+    // };
+    
+     FirebaseFirestore.instance.collection("Road").doc(id).update({"Name":name});
+      //FirebaseFirestore.instance.collection("Road").doc(id).set(road, SetOptions(merge: true));
   }
 
   //Add Road
@@ -219,14 +236,5 @@ class DatabaseManager {
       });
     }
 
-    // Future<void> removeFromMyRoadsRoads(
-    //     {required String? id, required String? roadId}) async {
-    //   final docUser = FirebaseFirestore.instance.collection('User').doc(id);
-
-    //   var collection = FirebaseFirestore.instance.collection('User');
-    //   collection.doc(id).update({
-    //     'myRoads': FieldValue.arrayRemove([roadId]),
-    //   });
-    // }
   }
 }

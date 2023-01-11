@@ -9,7 +9,7 @@ class Road {
   final int duration;
   final int distance;
   final String transportMode;
-  bool? isFavorite;
+  bool isFavorite;
   String? id;
 
     Road({
@@ -21,7 +21,7 @@ class Road {
   required this.distance,
   required this.transportMode,
   this.id,
-  this.isFavorite});
+  this.isFavorite = false});
 
   //factory Road.fromJson(Map<String, dynamic> json) => _roadFromJson(json);
 

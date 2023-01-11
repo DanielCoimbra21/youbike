@@ -1,47 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:youbike/favorite_roads.dart';
-import 'package:youbike/geolocation.dart';
 import 'package:youbike/myRoutesAdmin.dart';
 import 'package:youbike/routes_list.dart';
 import 'package:youbike/welcome_page.dart';
-import 'Database/firestore_reference.dart';
-import 'about_page.dart';
 import 'auth_controller.dart';
 import 'map_page.dart';
 
 var emailController = TextEditingController();
 
-class CustomDrawer extends StatefulWidget {
-  const CustomDrawer({super.key});
+class UserDrawer extends StatefulWidget {
+  const UserDrawer({super.key});
 
   @override
-  State<CustomDrawer> createState() => _CustomDrawerState();
+  State<UserDrawer> createState() => _UserDrawerState();
 }
 
-DatabaseManager db = DatabaseManager();
-String role = "";
-bool isAdmin = true;
-
-class _CustomDrawerState extends State<CustomDrawer> {
-  getIsAdmin() async {
-    role = await db.getUserRole();
-    if (role == 'admin') {
-      setState(() {
-        isAdmin = false;
-      });
-    } else {
-      setState(() {
-        isAdmin = true;
-      });
-    }
-  }
-
-  @override
-  initState() {
-    super.initState();
-    getIsAdmin();
-  }
-
+class _UserDrawerState extends State<UserDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -54,35 +28,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
             const DrawerHeader(
               decoration: BoxDecoration(color: Colors.pink),
               child: Text('YouBike'),
-            ),
-            Offstage(
-              offstage: isAdmin,
-              child: ListTile(
-                leading: const Icon(Icons.route_outlined),
-                title: const Text('My routes'),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            const MyRoutesAdmin()),
-                  );
-                },
-              ),
-            ),
-            Offstage(
-              offstage: isAdmin,
-              child: ListTile(
-                leading: const Icon(Icons.map_sharp),
-                title: const Text('Map'),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const Geolocation(),
-                    ),
-                  );
-                  // Navigator.pop(context);
-                },
-              ),
             ),
             ListTile(
               leading: const Icon(Icons.add_road),
@@ -106,15 +51,37 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 //Navigator.pop(context);
               },
             ),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('Profile'),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          WelcomePage(email: emailController.text.trim())),
+                );
+                //Navigator.pop(context);
+              },
+            ),
             const Divider(color: Colors.black),
             ListTile(
               leading: const Icon(Icons.info),
               title: const Text('About'),
               onTap: () {
-                 Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => const AboutPage()),
-                );
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -131,10 +98,3 @@ class _CustomDrawerState extends State<CustomDrawer> {
     );
   }
 }
-
-
-
-  //   getIsAdmin() async {
-  //   isAdmin = await db.getUserRole();
-
-  // }
