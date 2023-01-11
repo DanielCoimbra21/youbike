@@ -1,16 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:favorite_button/favorite_button.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:youbike/DTO/road.dart';
 import 'package:youbike/Database/firestore_reference.dart';
 import 'package:youbike/auth_controller.dart';
-import 'package:youbike/register_page.dart';
-
 import 'DTO/route_shape.dart';
+import 'edit_road_name.dart';
+import 'myRoutesAdmin.dart';
 
 final TextEditingController _textFieldController = TextEditingController();
 var routeName;
@@ -49,9 +45,10 @@ class MyAdminRoads extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
             gradient: const LinearGradient(
               colors: [
-                Color.fromARGB(255, 202, 68, 113),
-                Color.fromARGB(255, 185, 105, 132),
-                Color.fromARGB(255, 114, 164, 204),
+                Color(0xffD60C2E),
+                Color(0xffAD0B26),
+                Color(0xffFE8437),
+                Color(0xffF45E01),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -77,34 +74,29 @@ class MyAdminRoads extends StatelessWidget {
                   Text(
                       "Distance: ${road.distance} metres | Duration: ${road.duration} minutes |",
                       style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 14,
                       )),
-
-                  // Text.rich(
-                  //   WidgetSpan(
-                  //       child: Icon(
-                  //     Icons.favorite_border_outlined,
-                  //     color: Colors.pink,
-                  //   )),
-                  // ),
                 ],
               ),
               Row(
                 children: [
                   Text("Elevation: ${road.elvDeparture} metres - ",
                       style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 14,
                       )),
                   Text("${road.elvArrival} metres",
                       style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 14,
                       )),
                 ],
               ),
-              Visibility(
+              
+              Row(
+                children: [
+                  Visibility(
                 child: Container(
-                  alignment: Alignment.topRight,
-                  margin: const EdgeInsets.only(left: 20, right: 40),
+                  alignment: Alignment.bottomLeft,
+                  margin: const EdgeInsets.only(left: 30, right: 30),
                   child: TextButton(
                     style: flatButtonStyle,
                     onPressed: () {
@@ -142,25 +134,15 @@ class MyAdminRoads extends StatelessWidget {
               ),
               Visibility(
                 child: Container(
-                  alignment: Alignment.topRight,
-                  margin: const EdgeInsets.only(left: 20, right: 40),
-                  child: TextButton(
-                    style: flatButtonStyle,
-                    onPressed: () {
-                      var name = road.name;
-
-                      //db.editRoad(road.id, road.name)
-                    },
-                    child: const Icon(Icons.edit_attributes),
-                  ),
+                  alignment: Alignment.bottomLeft,
+                  margin: const EdgeInsets.only(left: 0, right: 20),
+                  child: IconButton(
+                        alignment: Alignment.centerRight,
+                        onPressed: () => Get.to(
+                            () => EditRoadNamePage(initialName: road.name, id : road.id)),
+                        icon: const Icon(Icons.edit)),
                 ),
               ),
-              Row(
-                children: [
-                  const Expanded(
-                      child: Divider(
-                    thickness: 1,
-                  ))
                 ],
               )
             ]),
@@ -170,4 +152,3 @@ class MyAdminRoads extends StatelessWidget {
     );
   }
 }
-

@@ -130,6 +130,17 @@ class DatabaseManager {
     await docUser.set(user);
   }
 
+  //Update Road Name
+  Future<void> updateRoadName(String? id, String name) async {
+
+    // final road = <String, String>{
+    //   "Name": name
+    // };
+    
+     FirebaseFirestore.instance.collection("Road").doc(id).update({"Name":name});
+      //FirebaseFirestore.instance.collection("Road").doc(id).set(road, SetOptions(merge: true));
+  }
+
   //Add Road
   Future<void> addRoad(
       {required RouteShape rs,
