@@ -27,9 +27,11 @@ class RouteCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
             gradient: const LinearGradient(
               colors: [
-                Color.fromARGB(255, 54, 128, 224),
-                Color.fromARGB(255, 116, 177, 226),
-                Color.fromARGB(255, 114, 164, 204),
+                Color(0xffFFFFFF),
+                Color(0xffF45E01),
+                Color(0xffD60C2E),
+                Color(0xffAD0B26),
+                
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -97,15 +99,6 @@ class RouteCard extends StatelessWidget {
                         icon: const Icon(Icons.pedal_bike)),
                   ],
                 ),
-                Row(
-                  children: const [
-                    Expanded(
-                      child: Divider(
-                        thickness: 1,
-                      ),
-                    )
-                  ],
-                )
               ],
             ),
           ),
