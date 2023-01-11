@@ -107,32 +107,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 //Navigator.pop(context);
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Profile'),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          WelcomePage(email: emailController.text.trim())),
-                );
-                //Navigator.pop(context);
-              },
-            ),
             const Divider(color: Colors.black),
             ListTile(
               leading: const Icon(Icons.info),
               title: const Text('About'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
               onTap: () {
                 // Update the state of the app
                 // ...
