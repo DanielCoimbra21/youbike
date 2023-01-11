@@ -3,46 +3,19 @@ import 'package:youbike/favorite_roads.dart';
 import 'package:youbike/myRoutesAdmin.dart';
 import 'package:youbike/routes_list.dart';
 import 'package:youbike/welcome_page.dart';
-import 'Database/firestore_reference.dart';
 import 'auth_controller.dart';
 import 'map_page.dart';
 
 var emailController = TextEditingController();
 
-class CustomDrawer extends StatefulWidget {
-  const CustomDrawer({super.key});
-
-
-  @override
-  State<CustomDrawer> createState() => _CustomDrawerState();
-}
-
-DatabaseManager db = DatabaseManager();
-String role = "";
-bool isAdmin = true;
-
-
-class _CustomDrawerState extends State<CustomDrawer> {
-    getIsAdmin() async {
-    role = await db.getUserRole();
-    if(role == 'admin'){
-      setState(() {
-        isAdmin = false;
-      });
-    }
-    else{
-      setState(() {
-        isAdmin = true;
-      });
-  }
-}
+class UserDrawer extends StatefulWidget {
+  const UserDrawer({super.key});
 
   @override
-  initState() {
-     super.initState();
-    getIsAdmin();
-  }
+  State<UserDrawer> createState() => _UserDrawerState();
+}
 
+class _UserDrawerState extends State<UserDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,35 +29,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
               decoration: BoxDecoration(color: Colors.pink),
               child: Text('YouBike'),
             ),
-            Offstage(
-              offstage: isAdmin,
-              child: ListTile(
-              leading: const Icon(Icons.route_outlined),
-              title: const Text('My routes'),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => const MyRoutesAdmin()),
-                );
-              },
-            ),
-            ),
-            Offstage(
-              offstage: isAdmin,
-              child: ListTile(
-              leading: const Icon(Icons.map_sharp),
-              title: const Text('Map'),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const MapPage(),
-                  ),
-                );
-                // Navigator.pop(context);
-              },
-            ),
-            ),
-            
             ListTile(
               leading: const Icon(Icons.add_road),
               title: const Text('All Routes'),
@@ -154,10 +98,3 @@ class _CustomDrawerState extends State<CustomDrawer> {
     );
   }
 }
-
-
-
-  //   getIsAdmin() async {
-  //   isAdmin = await db.getUserRole();
-
-  // }

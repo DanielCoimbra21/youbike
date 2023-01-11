@@ -12,9 +12,21 @@ import 'package:youbike/register_page.dart';
 
 import 'DTO/route_shape.dart';
 
+final TextEditingController _textFieldController = TextEditingController();
+var routeName;
+final ButtonStyle flatButtonStyle = TextButton.styleFrom(
+  foregroundColor: Colors.black87,
+  minimumSize: const Size(88, 36),
+  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(2.0)),
+  ),
+);
+
 class MyAdminRoads extends StatelessWidget {
   final Road road;
   DatabaseManager db = DatabaseManager();
+
   MyAdminRoads(this.road, {super.key});
 
   final ButtonStyle flatButtonStyle = TextButton.styleFrom(
@@ -31,7 +43,6 @@ class MyAdminRoads extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       child: Card(
-        
         elevation: 0,
         child: Container(
           decoration: BoxDecoration(
@@ -129,6 +140,21 @@ class MyAdminRoads extends StatelessWidget {
                   ),
                 ),
               ),
+              Visibility(
+                child: Container(
+                  alignment: Alignment.topRight,
+                  margin: const EdgeInsets.only(left: 20, right: 40),
+                  child: TextButton(
+                    style: flatButtonStyle,
+                    onPressed: () {
+                      var name = road.name;
+
+                      //db.editRoad(road.id, road.name)
+                    },
+                    child: const Icon(Icons.edit_attributes),
+                  ),
+                ),
+              ),
               Row(
                 children: [
                   const Expanded(
@@ -144,3 +170,4 @@ class MyAdminRoads extends StatelessWidget {
     );
   }
 }
+

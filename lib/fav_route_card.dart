@@ -58,14 +58,6 @@ class RouteCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 12,
                         )),
-
-                    // Text.rich(
-                    //   WidgetSpan(
-                    //       child: Icon(
-                    //     Icons.favorite_border_outlined,
-                    //     color: Colors.pink,
-                    //   )),
-                    // ),
                   ],
                 ),
                 Row(
@@ -96,9 +88,6 @@ class RouteCard extends StatelessWidget {
                               AuthController.instance.auth.currentUser?.uid,
                               road.id);
                         }
-                        // deleteFromFav(
-                        //     AuthController.instance.auth.currentUser?.uid,
-                        //     road.id);
                       },
                     ),
                     IconButton(
