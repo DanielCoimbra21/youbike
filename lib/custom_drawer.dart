@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youbike/favorite_roads.dart';
+import 'package:youbike/geolocation.dart';
 import 'package:youbike/myRoutesAdmin.dart';
 import 'package:youbike/routes_list.dart';
 import 'package:youbike/welcome_page.dart';
@@ -12,7 +13,6 @@ var emailController = TextEditingController();
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
 
-
   @override
   State<CustomDrawer> createState() => _CustomDrawerState();
 }
@@ -21,25 +21,23 @@ DatabaseManager db = DatabaseManager();
 String role = "";
 bool isAdmin = true;
 
-
 class _CustomDrawerState extends State<CustomDrawer> {
-    getIsAdmin() async {
+  getIsAdmin() async {
     role = await db.getUserRole();
-    if(role == 'admin'){
+    if (role == 'admin') {
       setState(() {
         isAdmin = false;
       });
-    }
-    else{
+    } else {
       setState(() {
         isAdmin = true;
       });
+    }
   }
-}
 
   @override
   initState() {
-     super.initState();
+    super.initState();
     getIsAdmin();
   }
 
@@ -59,32 +57,32 @@ class _CustomDrawerState extends State<CustomDrawer> {
             Offstage(
               offstage: isAdmin,
               child: ListTile(
-              leading: const Icon(Icons.route_outlined),
-              title: const Text('My routes'),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => const MyRoutesAdmin()),
-                );
-              },
-            ),
+                leading: const Icon(Icons.route_outlined),
+                title: const Text('My routes'),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const MyRoutesAdmin()),
+                  );
+                },
+              ),
             ),
             Offstage(
               offstage: isAdmin,
               child: ListTile(
-              leading: const Icon(Icons.map_sharp),
-              title: const Text('Map'),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const MapPage(),
-                  ),
-                );
-                // Navigator.pop(context);
-              },
+                leading: const Icon(Icons.map_sharp),
+                title: const Text('Map'),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const Geolocation(),
+                    ),
+                  );
+                  // Navigator.pop(context);
+                },
+              ),
             ),
-            ),
-            
             ListTile(
               leading: const Icon(Icons.add_road),
               title: const Text('All Routes'),

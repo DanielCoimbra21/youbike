@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 // ignore: depend_on_referenced_packages
 import 'package:latlong2/latlong.dart';
@@ -11,13 +12,15 @@ import 'package:youbike/auth/secrets.dart';
 import 'package:youbike/auth_controller.dart';
 import 'package:youbike/polyline/flexible_polyline.dart';
 import 'package:youbike/DTO/route_shape.dart';
+import 'package:youbike/polyline/latlngz.dart';
 import 'Database/firestore_reference.dart';
 import 'custom_drawer.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 
 class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+  const MapPage({super.key, required this.currentPosition});
+  final LatLngZ currentPosition;
 
   @override
   State<StatefulWidget> createState() => _MapPageState();
@@ -166,7 +169,8 @@ class _MapPageState extends State<MapPage> {
           Flexible(
               child: FlutterMap(
             options: MapOptions(
-              center: LatLng(46.283099, 7.539069),
+              center: LatLng(
+                  widget.currentPosition.lat, widget.currentPosition.lng),
               zoom: 15,
               onTap: (tapPosition, LatLng latLng) {
                 if (currentNumbMarker < maxMarker) {
