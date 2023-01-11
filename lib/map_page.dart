@@ -343,6 +343,14 @@ class _MapPageState extends State<MapPage> {
               MarkerLayer(
                 markers: [
                   for (var m in markers) m,
+                  Marker(
+                      point: LatLng(widget.currentPosition.lat,
+                          widget.currentPosition.lng),
+                      builder: (ctx) => const Icon(
+                            Icons.person_pin_circle_rounded,
+                            color: Color.fromARGB(255, 21, 39, 138),
+                            size: 40,
+                          )),
                 ],
               )
             ],
