@@ -73,7 +73,7 @@ class MyAdminRoads extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                      "Distance: ${road.distance} metres | Duration: ${road.duration} minutes |",
+                      "Distance: ${(road.distance / 1000).toStringAsFixed(2)} km | Duration: ${(road.duration / 60).toStringAsFixed(1)} minutes |",
                       style: const TextStyle(
                         fontSize: 14,
                       )),
@@ -81,11 +81,11 @@ class MyAdminRoads extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Text("Elevation: ${road.elvDeparture} metres - ",
+                  Text("Elevation: ${road.elvDeparture} meters - ",
                       style: const TextStyle(
                         fontSize: 14,
                       )),
-                  Text("${road.elvArrival} metres",
+                  Text("${road.elvArrival} meters",
                       style: const TextStyle(
                         fontSize: 14,
                       )),
