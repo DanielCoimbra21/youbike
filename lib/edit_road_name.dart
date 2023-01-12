@@ -6,7 +6,6 @@ import 'my_routes_admin.dart';
 
 DatabaseManager db = DatabaseManager();
 
-
 ///Thanks to this class we can edit a road name
 class EditRoadNamePage extends StatefulWidget {
   final String initialName;
@@ -33,7 +32,7 @@ class _EditRoadNamePageState extends State<EditRoadNamePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Road Name'),
+        title: const Text('Edit Road Name'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -43,7 +42,7 @@ class _EditRoadNamePageState extends State<EditRoadNamePage> {
             children: <Widget>[
               TextFormField(
                 controller: nameController,
-                decoration: InputDecoration(labelText: 'Road Name'),
+                decoration: const InputDecoration(labelText: 'Road Name'),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter the name of the client';
@@ -61,7 +60,7 @@ class _EditRoadNamePageState extends State<EditRoadNamePage> {
                       // Send the data to the backend for updating the client's information
                     }
                   },
-                  child: Text('Save'),
+                  child: const Text('Save'),
                 ),
               ),
             ],

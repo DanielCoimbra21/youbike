@@ -90,9 +90,9 @@ class _GeolocationState extends State<Geolocation> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text('Geolocation'),
+        title: const Text('Geolocation'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Getting current location'),
       ),
     );
