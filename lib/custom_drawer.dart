@@ -3,14 +3,19 @@ import 'package:youbike/favorite_roads.dart';
 import 'package:youbike/geolocation.dart';
 import 'package:youbike/myRoutesAdmin.dart';
 import 'package:youbike/routes_list.dart';
-import 'package:youbike/welcome_page.dart';
 import 'Database/firestore_reference.dart';
 import 'about_page.dart';
 import 'auth_controller.dart';
-import 'map_page.dart';
 
 var emailController = TextEditingController();
 
+///This Drawer class has the purpose
+///of displaying the different pages
+///so the user can navigate 
+///
+///it has a condition that tests if the user is Admin  or not
+///and based on the result it displays or hides certain pages
+///
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
 
@@ -80,7 +85,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       builder: (context) => const Geolocation(),
                     ),
                   );
-                  // Navigator.pop(context);
                 },
               ),
             ),
@@ -132,9 +136,3 @@ class _CustomDrawerState extends State<CustomDrawer> {
   }
 }
 
-
-
-  //   getIsAdmin() async {
-  //   isAdmin = await db.getUserRole();
-
-  // }

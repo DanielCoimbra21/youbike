@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'custom_drawer.dart';
 
+/// Displays the information about the App
+/// and about the developpers as well as about he version: 1.0.0
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
 

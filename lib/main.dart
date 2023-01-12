@@ -1,19 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:youbike/DTO/user.dart';
 import 'package:youbike/auth_controller.dart';
 import 'package:youbike/login_page.dart';
-import 'package:youbike/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:youbike/welcome_page.dart';
 import 'DTO/firebase_options.dart';
 import 'package:get/get.dart';
-import 'auth_controller.dart';
-import 'login_page.dart';
-import 'register_page.dart';
-import 'welcome_page.dart';
 
-//DatabaseManager db = DatabaseManager(uid: "HelloWorld");
 var emailController = TextEditingController();
 
 void main() async {
@@ -32,7 +23,6 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: const LoginPage(),
-      //home: const RootPage(),
       theme: ThemeData(primarySwatch: Colors.pink),
     );
   }
@@ -49,26 +39,9 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   int currentPage = 0;
 
-  //List<Widget> pages = [HomePage(), RoutesPage(), MapPage(), WelcomePage(email: emailController.text.trim())];
-
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-        //body: pages[currentPage],
-        // bottomNavigationBar: NavigationBar(
-        //   destinations: const [
-        //     NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-        //     NavigationDestination(icon: Icon(Icons.route), label: 'Routes'),
-        //     NavigationDestination(icon: Icon(Icons.map), label: 'Map')
-        //   ],
-        //   onDestinationSelected: (int index) {
-        //     setState(() {
-        //       currentPage = index;
-        //       debugPrint(index.toString());
-        //     });
-        //   },
-        //   selectedIndex: currentPage,
-        // ),
         );
   }
 }

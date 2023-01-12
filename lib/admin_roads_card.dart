@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:youbike/DTO/road.dart';
 import 'package:youbike/Database/firestore_reference.dart';
 import 'package:youbike/auth_controller.dart';
 import 'DTO/route_shape.dart';
 import 'edit_road_name.dart';
-import 'myRoutesAdmin.dart';
 
-final TextEditingController _textFieldController = TextEditingController();
-var routeName;
+///Configuration of a button
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   foregroundColor: Colors.black87,
   minimumSize: const Size(88, 36),
@@ -19,6 +16,9 @@ final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   ),
 );
 
+///This class has only the purpose
+///of displaying a good UI
+///in cards
 class MyAdminRoads extends StatelessWidget {
   final Road road;
   DatabaseManager db = DatabaseManager();
@@ -93,6 +93,7 @@ class MyAdminRoads extends StatelessWidget {
               
               Row(
                 children: [
+                  ///This button is used to delete one road
                   Visibility(
                 child: Container(
                   alignment: Alignment.bottomLeft,
@@ -133,6 +134,7 @@ class MyAdminRoads extends StatelessWidget {
                 ),
               ),
               Visibility(
+                ///this button is used to Edit one road Name
                 child: Container(
                   alignment: Alignment.bottomLeft,
                   margin: const EdgeInsets.only(left: 0, right: 20),

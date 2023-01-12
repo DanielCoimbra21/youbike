@@ -1,13 +1,10 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:youbike/auth_controller.dart';
 import 'package:youbike/register_page.dart';
 
+///Login page
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -29,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             width: w,
             height: h * 0.3,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("img/loginBackgroundWithLogo.png"),
                     fit: BoxFit.cover)),
@@ -43,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "Welcome back !",
                   style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),
                 ),
@@ -51,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                   "Sign into your account",
                   style: TextStyle(fontSize: 20, color: Colors.grey[500]),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 Container(
@@ -62,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                         BoxShadow(
                             blurRadius: 10,
                             spreadRadius: 7,
-                            offset: Offset(1, 1),
+                            offset: const Offset(1, 1),
                             color: Colors.grey.withOpacity(0.5))
                       ]),
                   child: TextField(
@@ -70,20 +67,20 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                         hintText: "Email",
                         prefixIcon:
-                            Icon(Icons.email, color: Colors.deepOrangeAccent),
+                            const Icon(Icons.email, color: Colors.deepOrangeAccent),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
                             borderSide:
-                                BorderSide(color: Colors.white, width: 1.0)),
+                                const BorderSide(color: Colors.white, width: 1.0)),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
                             borderSide:
-                                BorderSide(color: Colors.white, width: 1.0)),
+                                const BorderSide(color: Colors.white, width: 1.0)),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30))),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -94,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                         BoxShadow(
                             blurRadius: 10,
                             spreadRadius: 7,
-                            offset: Offset(1, 1),
+                            offset: const Offset(1, 1),
                             color: Colors.grey.withOpacity(0.5))
                       ]),
                   child: TextField(
@@ -102,27 +99,27 @@ class _LoginPageState extends State<LoginPage> {
                     obscureText: true,
                     decoration: InputDecoration(
                         hintText: "Password",
-                        prefixIcon: Icon(Icons.password,
+                        prefixIcon: const Icon(Icons.password,
                             color: Colors.deepOrangeAccent),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
                             borderSide:
-                                BorderSide(color: Colors.white, width: 1.0)),
+                                const BorderSide(color: Colors.white, width: 1.0)),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
                             borderSide:
-                                BorderSide(color: Colors.white, width: 1.0)),
+                                const BorderSide(color: Colors.white, width: 1.0)),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30))),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           GestureDetector(
@@ -135,10 +132,10 @@ class _LoginPageState extends State<LoginPage> {
               height: h * 0.08,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  image: DecorationImage(
+                  image: const DecorationImage(
                       image: AssetImage("img/btnBackground.png"),
                       fit: BoxFit.cover)),
-              child: Center(
+              child: const Center(
                 child: Text(
                   "Sign in",
                   style: TextStyle(
@@ -158,12 +155,12 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                 TextSpan(
                     text: " Create",
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => Get.to(() => RegisterPage()))
+                      ..onTap = () => Get.to(() => const RegisterPage()))
               ]))
         ]),
       ),
