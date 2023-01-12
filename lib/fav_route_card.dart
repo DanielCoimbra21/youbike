@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/gestures.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:html/parser.dart';
 import 'package:youbike/DTO/road.dart';
 import 'package:youbike/Database/firestore_reference.dart';
 import 'package:youbike/auth_controller.dart';
@@ -31,7 +34,6 @@ class RouteCard extends StatelessWidget {
                 Color(0xffF45E01),
                 Color(0xffD60C2E),
                 Color(0xffAD0B26),
-                
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -56,7 +58,7 @@ class RouteCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        "Distance: ${road.distance} metres | Duration: ${road.duration} minutes |",
+                        "Distance: ${(road.distance / 1000).toStringAsFixed(2)} km | Duration: ${(road.duration / 60).toStringAsFixed(1)} minutes |",
                         style: const TextStyle(
                           fontSize: 12,
                         )),
@@ -64,11 +66,11 @@ class RouteCard extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text("Elevation: ${road.elvDeparture} metres - ",
+                    Text("Elevation: ${road.elvDeparture} meters - ",
                         style: const TextStyle(
                           fontSize: 12,
                         )),
-                    Text("${road.elvArrival} metres",
+                    Text("${road.elvArrival} meters",
                         style: const TextStyle(
                           fontSize: 12,
                         )),
