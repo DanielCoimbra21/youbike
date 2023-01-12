@@ -1,11 +1,6 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:youbike/Database/firestore_reference.dart';
-import 'package:favorite_button/favorite_button.dart';
 import 'DTO/road.dart';
-import 'DTO/user.dart';
-import 'auth_controller.dart';
 import 'custom_drawer.dart';
 import 'fav_route_card.dart';
 
@@ -34,9 +29,7 @@ class _RoutesListState extends State<RoutesList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
     getRoads();
   }
 
@@ -49,8 +42,7 @@ class _RoutesListState extends State<RoutesList> {
           PopupMenuButton<String>(
             onSelected: handleClick,
             itemBuilder: (BuildContext context) {
-              return {'Distance', 'Duration'}
-                  .map((String choice) {
+              return {'Distance', 'Duration'}.map((String choice) {
                 return PopupMenuItem<String>(
                   value: choice,
                   child: Text(choice),
