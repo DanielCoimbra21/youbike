@@ -5,6 +5,7 @@ import 'package:youbike/Database/firestore_reference.dart';
 import 'package:youbike/auth_controller.dart';
 import 'DTO/route_shape.dart';
 import 'edit_road_name.dart';
+import 'my_routes_admin.dart';
 
 ///Configuration of a button
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
@@ -90,61 +91,59 @@ class MyAdminRoads extends StatelessWidget {
                       )),
                 ],
               ),
-              
               Row(
                 children: [
                   ///This button is used to delete one road
                   Visibility(
-                child: Container(
-                  alignment: Alignment.bottomLeft,
-                  margin: const EdgeInsets.only(left: 30, right: 30),
-                  child: TextButton(
-                    style: flatButtonStyle,
-                    onPressed: () {
-                      var name = road.name;
-                      RouteShape routeShape = RouteShape(
-                          polyline: road.polyline,
-                          elvDeparture: road.elvDeparture,
-                          elvArrival: road.elvArrival,
-                          duration: road.duration,
-                          distance: road.distance,
-                          transportMode: road.transportMode);
+                    child: Container(
+                      alignment: Alignment.bottomLeft,
+                      margin: const EdgeInsets.only(left: 30, right: 30),
+                      child: TextButton(
+                        style: flatButtonStyle,
+                        onPressed: () {
+                          var name = road.name;
+                          RouteShape routeShape = RouteShape(
+                              polyline: road.polyline,
+                              elvDeparture: road.elvDeparture,
+                              elvArrival: road.elvArrival,
+                              duration: road.duration,
+                              distance: road.distance,
+                              transportMode: road.transportMode);
 
-                      db.deleteMyRoad(road.id);
-                      final snackBar = SnackBar(
-                        content: Text('Deleted route ${road.name}'),
-                        action: SnackBarAction(
-                          label: 'Undo',
-                          onPressed: () {
-                            db.addRoad(
-                                rs: routeShape,
-                                name: name,
-                                id: AuthController
-                                    .instance.auth.currentUser?.uid);
-                          },
-                        ),
-                      );
+                          db.deleteMyRoad(road.id);
+                          final snackBar = SnackBar(
+                            content: Text('Deleted route ${road.name}'),
+                            action: SnackBarAction(
+                              label: 'Undo',
+                              onPressed: () {
+                                db.addRoad(
+                                    rs: routeShape,
+                                    name: name,
+                                    id: AuthController
+                                        .instance.auth.currentUser?.uid);
+                              },
+                            ),
+                          );
 
-                      // Find the ScaffoldMessenger in the widget tree
-                      // and use it to show a SnackBar.
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    },
-                    child: const Icon(Icons.delete),
+                          // Find the ScaffoldMessenger in the widget tree
+                          // and use it to show a SnackBar.
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        },
+                        child: const Icon(Icons.delete),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              Visibility(
-                ///this button is used to Edit one road Name
-                child: Container(
-                  alignment: Alignment.bottomLeft,
-                  margin: const EdgeInsets.only(left: 0, right: 20),
-                  child: IconButton(
-                        alignment: Alignment.centerRight,
-                        onPressed: () => Get.to(
-                            () => EditRoadNamePage(initialName: road.name, id : road.id)),
-                        icon: const Icon(Icons.edit)),
-                ),
-              ),
+                  Visibility(
+                    child: Container(
+                      alignment: Alignment.bottomLeft,
+                      margin: const EdgeInsets.only(left: 0, right: 20),
+                      child: IconButton(
+                          alignment: Alignment.centerRight,
+                          onPressed: () => Get.to(() => EditRoadNamePage(
+                              initialName: road.name, id: road.id)),
+                          icon: const Icon(Icons.edit)),
+                    ),
+                  ),
                 ],
               )
             ]),
