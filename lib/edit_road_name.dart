@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'Database/firestore_reference.dart';
 import 'admin_roads_card.dart';
-import 'myRoutesAdmin.dart';
+import 'my_routes_admin.dart';
+
+DatabaseManager db = DatabaseManager();
 
 
- DatabaseManager db = DatabaseManager();
-
+///Thanks to this class we can edit a road name
 class EditRoadNamePage extends StatefulWidget {
   final String initialName;
   final String? id;
- 
 
- const EditRoadNamePage({super.key, required this.initialName, required this.id});
+  const EditRoadNamePage(
+      {super.key, required this.initialName, required this.id});
 
   @override
   _EditRoadNamePageState createState() => _EditRoadNamePageState();
@@ -56,11 +56,9 @@ class _EditRoadNamePageState extends State<EditRoadNamePage> {
                 child: TextButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                        updateRoadName(widget.id, nameController.text);
-                        Get.to(
-                            () => const MyRoutesAdmin());
+                      updateRoadName(widget.id, nameController.text);
+                      Get.to(() => const MyRoutesAdmin());
                       // Send the data to the backend for updating the client's information
-                      print('Name: ${nameController.text}');
                     }
                   },
                   child: Text('Save'),
@@ -80,7 +78,6 @@ class _EditRoadNamePageState extends State<EditRoadNamePage> {
   }
 }
 
-
-updateRoadName(String? id, String name) async{
+updateRoadName(String? id, String name) async {
   db.updateRoadName(id, name);
 }

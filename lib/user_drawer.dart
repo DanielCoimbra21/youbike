@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:youbike/favorite_roads.dart';
-import 'package:youbike/myRoutesAdmin.dart';
 import 'package:youbike/routes_list.dart';
 import 'package:youbike/welcome_page.dart';
 import 'auth_controller.dart';
-import 'map_page.dart';
 
 var emailController = TextEditingController();
 
@@ -15,10 +13,11 @@ class UserDrawer extends StatefulWidget {
   State<UserDrawer> createState() => _UserDrawerState();
 }
 
+//Drawer For user that don't have admin role
 class _UserDrawerState extends State<UserDrawer> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width * 0.65,
       child: Scaffold(
         body: ListView(

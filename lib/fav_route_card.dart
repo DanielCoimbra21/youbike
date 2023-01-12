@@ -1,18 +1,15 @@
+
 import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:favorite_button/favorite_button.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:html/parser.dart';
 import 'package:youbike/DTO/road.dart';
 import 'package:youbike/Database/firestore_reference.dart';
 import 'package:youbike/auth_controller.dart';
-import 'package:youbike/register_page.dart';
-
 import 'mapRouteDisplay.dart';
 
 class RouteCard extends StatelessWidget {
@@ -78,6 +75,7 @@ class RouteCard extends StatelessWidget {
                 ),
                 Row(
                   children: [
+                    ///Like button
                     FavoriteButton(
                       isFavorite: road.isFavorite,
                       valueChanged: (isFavorite) {
@@ -95,6 +93,7 @@ class RouteCard extends StatelessWidget {
                       },
                     ),
                     IconButton(
+                      //Bike icon to display the road on the map
                         alignment: Alignment.centerRight,
                         onPressed: () => Get.to(
                             () => DisplayRouteMap(polyline: road.polyline)),
@@ -110,6 +109,10 @@ class RouteCard extends StatelessWidget {
   }
 }
 
+///
+///Reference to the Database
+///to have access to the queries
+///
 deleteFromFav(String? id, String? roadId) async {
   DatabaseManager db = DatabaseManager();
   await db.removeFromFavoriteRoads(id: id, roadId: roadId);

@@ -21,6 +21,7 @@ class User {
 
 
 
+  //Translates the information from Json
   factory User.fromJson(Map<String, dynamic> json) => User(email : json['email'] as String,
       favoriteRoads :json['favoriteRoads'] as List<Road>,
       firstName : json['firstName'] as String,
@@ -33,18 +34,7 @@ class User {
 
 }
 
-User _userFromJson(Map<String, dynamic> json) {
-  return User(
-      email : json['email'] as String,
-      favoriteRoads :json['favoriteRoads'] as List<Road>,
-      firstName : json['firstName'] as String,
-      myRoads: json['myRoads'] as List<Road>,
-      name: json['name'] as String,
-      position: json['position'] as String,
-      role: json['role'] as String);
-}
-
-
+//Translates the information to Json
 Map<String, dynamic> _userToJson(User instance) => <String, dynamic>{
       'email': instance.email,
       'favoriteRoads': _favoriteRoads(instance.favoriteRoads),
@@ -55,6 +45,7 @@ Map<String, dynamic> _userToJson(User instance) => <String, dynamic>{
       'role': instance.role
     };
 
+//List all the roads from favoriteRoads
 List<Map<String, dynamic>>? _favoriteRoads(List<Road>? roads) {
   if (roads == null) {
     return null;
@@ -66,6 +57,7 @@ List<Map<String, dynamic>>? _favoriteRoads(List<Road>? roads) {
   return roadMap;
 }
 
+//List all the Roads 
 List<Map<String, dynamic>>? _myRoadsList(List<Road>? roads) {
   if (roads == null) {
     return null;
