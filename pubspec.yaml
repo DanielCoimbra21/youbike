@@ -45,6 +45,8 @@ dependencies:
   fab_circular_menu: ^1.0.2
   geolocator: ^8.2.0
   geocoding: ^2.0.5
+  syncfusion_flutter_charts: ^20.4.43
+  sliding_up_panel: ^2.0.0+1
 
 
 

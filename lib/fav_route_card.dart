@@ -1,4 +1,3 @@
-
 import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -93,10 +92,10 @@ class RouteCard extends StatelessWidget {
                       },
                     ),
                     IconButton(
-                      //Bike icon to display the road on the map
+                        //Bike icon to display the road on the map
                         alignment: Alignment.centerRight,
-                        onPressed: () => Get.to(
-                            () => DisplayRouteMap(polyline: road.polyline)),
+                        onPressed: () =>
+                            Get.to(() => DisplayRouteMap(road: road)),
                         icon: const Icon(Icons.pedal_bike)),
                   ],
                 ),
