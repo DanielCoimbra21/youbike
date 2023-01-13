@@ -132,6 +132,7 @@ class FlexiblePolyline {
     if (coordinates.isEmpty) {
       throw ArgumentError("Invalid coordinates!");
     }
+    // ignore: unnecessary_null_comparison
     if (thirdDimension == null) {
       throw ArgumentError("Invalid thirdDimension");
     }
@@ -198,10 +199,10 @@ class _Decoder {
     final Tuple2<int, int> result =
         Converter.decodeUnsignedVarint(encoded, index);
 
-    if (result.item1 != FlexiblePolyline.version){
-        throw ArgumentError("Invalid format version");
+    if (result.item1 != FlexiblePolyline.version) {
+      throw ArgumentError("Invalid format version");
     }
-      
+
     // Decode the polyline header
     return Converter.decodeUnsignedVarint(encoded, result.item2);
   }
@@ -280,7 +281,7 @@ class _Encoder {
   }
 
   void add(LatLngZ tuple) {
-    
+    // ignore: unnecessary_null_comparison
     if (tuple == null) {
       throw ArgumentError("Invalid LatLngZ tuple");
     }

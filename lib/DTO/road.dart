@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+//Road Object 
 class Road {
   final String name;
   final String polyline;
@@ -23,8 +24,8 @@ class Road {
   this.id,
   this.isFavorite = false});
 
-  //factory Road.fromJson(Map<String, dynamic> json) => _roadFromJson(json);
 
+  //Translates the information from the Json
   factory Road.fromJson(Map<String, dynamic> json) => Road(
     id: json['Id'],
     name: json['Name'],
@@ -49,6 +50,7 @@ class Road {
 }
 
 
+//Translates the information to Json
 Map<String, dynamic> _roadToJson(Road instance) => <String, dynamic>{
       'Distance': instance.distance,
       'Duration': instance.duration,

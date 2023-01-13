@@ -1,15 +1,12 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:get/utils.dart';
 import 'package:youbike/DTO/route_shape.dart';
 import 'package:youbike/auth_controller.dart';
-import 'package:youbike/routes_list.dart';
-
 import '../DTO/road.dart';
 import '../DTO/user.dart';
 
+//Reference to the collections User and Road
+//to read and write data
 class DatabaseManager {
   final roadRef =
       FirebaseFirestore.instance.collection('Road').withConverter<Road>(
@@ -23,7 +20,8 @@ class DatabaseManager {
             toFirestore: (user, _) => user.toJson(),
           );
 
-  //List Roads
+  //List all Roads
+  //the favorite ones will have a filled heart in red
   Future<List<Road?>> getRoads() async {
     final docUser = FirebaseFirestore.instance
         .collection('User')
@@ -34,8 +32,6 @@ class DatabaseManager {
 
     List favRoadsName = docU.get('favoriteRoads');
     List<Road> roads = [];
-
-
 
   for(var road in allRoads.docs){
     Road road5 = road.data();
@@ -49,7 +45,7 @@ class DatabaseManager {
     return roads;
   }
 
-  //Get User 
+  //Get User Role
   Future<String> getUserRole() async{
         final docUser = FirebaseFirestore.instance
         .collection('User')
@@ -60,7 +56,7 @@ class DatabaseManager {
 
   }
 
-  //List Roads
+  //List my Admin Roads
   Future<List<Road?>> getMyRoads() async {
     final docUser = FirebaseFirestore.instance
         .collection('User')
@@ -80,13 +76,12 @@ class DatabaseManager {
           roads.add(road5);
         }
       }
-      //addRoad in anotherlist of roads
     }
 
     return roads;
   }
 
-  //List Roads
+  //List the favourite Roads
   Future<List<Road?>> getFavRoads() async {
     final docUser = FirebaseFirestore.instance
         .collection('User')
@@ -112,8 +107,7 @@ class DatabaseManager {
     return roads;
   }
 
-  //Add User
-  //Future<void> addUser({required String email, required String? id}) async {
+  //Add User to the App
   Future<void> addUser({required String email, required String? id}) async {
     final docUser = FirebaseFirestore.instance.collection('User').doc(id);
 
@@ -132,16 +126,10 @@ class DatabaseManager {
 
   //Update Road Name
   Future<void> updateRoadName(String? id, String name) async {
-
-    // final road = <String, String>{
-    //   "Name": name
-    // };
-    
      FirebaseFirestore.instance.collection("Road").doc(id).update({"Name":name});
-      //FirebaseFirestore.instance.collection("Road").doc(id).set(road, SetOptions(merge: true));
   }
 
-  //Add Road
+  //Add Road to the DataBase
   Future<void> addRoad(
       {required RouteShape rs,
       required String name,
@@ -162,6 +150,7 @@ class DatabaseManager {
     updateMyRoadsByUser(id: id, roadId: docRoad.id);
   }
 
+  //Add the road to the Admin user road list
   Future<void> updateMyRoadsByUser(
       {required String? id, required String? roadId}) async {
     final docUser = FirebaseFirestore.instance.collection('User').doc(id);
@@ -172,6 +161,7 @@ class DatabaseManager {
     });
   }
 
+  //Delete the road
   Future<void> deleteMyRoad(String? roadId) async {
     FirebaseFirestore.instance.collection("Road").doc(roadId).delete().then(
           (doc) => log("Document deleted"),
@@ -182,6 +172,7 @@ class DatabaseManager {
         id: AuthController.instance.auth.currentUser?.uid, roadId: roadId);
   }
 
+  //Add to favourtie Road list when its liked
   Future<void> addToFavoriteRoads(
       {required String? id, required String? roadId}) async {
     final docUser = FirebaseFirestore.instance.collection('User').doc(id);
@@ -190,8 +181,6 @@ class DatabaseManager {
     for (var road in allRoads.docs) {
       if (road.id == roadId) {
         DocumentSnapshot doc = await docUser.get();
-
-        //List roads = doc.get('favoriteRoads');
 
         docUser.update(
           {
@@ -202,6 +191,7 @@ class DatabaseManager {
     }
   }
 
+  //Remove from the FAvorite Road list when unliked
   Future<void> removeFromFavoriteRoads(
       {required String? id, required String? roadId}) async {
     final docUser = FirebaseFirestore.instance.collection('User').doc(id);
@@ -222,6 +212,7 @@ class DatabaseManager {
     }
   }
 
+ //Remove the road from the list my roads in the database
   Future<void> removeFromMyRoadsRoads(
       {required String? id, required String? roadId}) async {
     final docUser = FirebaseFirestore.instance.collection('User').doc(id);

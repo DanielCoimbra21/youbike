@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -12,9 +14,11 @@ class Geolocation extends StatefulWidget {
 }
 
 class _GeolocationState extends State<Geolocation> {
-  String? _currentAddress;
   Position? _currentPosition;
 
+  // The function checks if the user has granted location permissions or not.
+  // If the user has granted location permissions, it returns true.
+  // Otherwise, it returns false.
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -44,6 +48,9 @@ class _GeolocationState extends State<Geolocation> {
     return true;
   }
 
+  // This function is called at build.
+  // It gets the current position of the user if the app has permission.
+  // Otherwise, it sets the current position to a default value.
   Future<void> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
 
@@ -83,9 +90,9 @@ class _GeolocationState extends State<Geolocation> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text('Geolocation'),
+        title: const Text('Geolocation'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Getting current location'),
       ),
     );
